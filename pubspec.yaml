@@ -71,3 +71,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  assets:
+  - assets/bg/EsquinaSup.png
+  - assets/bg/EsquinaInf.png
+  - assets/bg/Logo.png
+  - assets/bg/LogoSmall.png

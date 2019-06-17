@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
 import 'pantalla.dart';
-import 'pantalla_bienvenida.dart';
 
 void main() {
   // See https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
@@ -11,7 +11,7 @@ void main() {
   runApp(new PageBienvenida());
 }
 
-class MyApp extends StatelessWidget {
+class PageBienvenida extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -37,26 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
-    var respuestas = ["one", "two", "three", "four"];
-    var botones = <RaisedButton>[];
-    for (var i = 0; i < respuestas.length; i++) {
-      botones.add(
-        new RaisedButton(
-            key: null,
-            onPressed: buttonPressed,
-            shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            color: const Color(0xFFe0e0e0),
-            child: new Text(
-              respuestas[i],
-              style: new TextStyle(
-                  fontSize: 12.0,
-                  color: const Color(0xFF000000),
-                  fontWeight: FontWeight.w200,
-                  fontFamily: "Roboto"),
-            )),
-      );
-    }
     return new Scaffold(
         body: new Container(
             decoration: BoxDecoration(
@@ -77,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             child: new Container(
+              padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                   // color: Colors.blue,
                   image: DecorationImage(
@@ -93,38 +74,31 @@ class _MyHomePageState extends State<MyHomePage> {
                     alignment: new Alignment(1.0, -1.0),
               )),
               child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new Text(
-                            "qWerty1",
-                            style: new TextStyle(
-                                fontSize: 37.0,
-                                color: const Color(0xFF000000),
-                                fontWeight: FontWeight.w200,
-                                fontFamily: "Roboto"),
-                          )
-                        ]),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: botones,
+                    new Text("PON A PRUEBA TU CONOCIMIENTO Y SELECCIONA LAS RESPUESTAS CORRECTAS",
+                      style: new TextStyle(
+                        color: Colors.blue,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w900
+                      ),
+                    ),
+                    new RaisedButton(
+                      key: null,
+                      onPressed: buttonPressed,
+                      child: Text('text'),
                     )
                   ]),
             ))));
   }
 
   void buttonPressed() {
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Pantalla()),
+      CupertinoPageRoute(builder: (context) => Pantalla()),
+      // MaterialPageRoute(builder: (context) => Pantalla()),
     );
 
     // Navigator.push(
