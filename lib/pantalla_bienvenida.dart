@@ -1,15 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart'
-    show debugDefaultTargetPlatformOverride;
-import 'pantalla.dart';
-
-void main() {
-  // See https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-
-  runApp(new PageBienvenida());
-}
+import 'registro.dart';
 
 class PageBienvenida extends StatelessWidget {
   @override
@@ -66,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: new Alignment(1.0, 1.0),
               )),
               child: new Container(
-              decoration: BoxDecoration(
+                decoration: BoxDecoration(
                   // color: Colors.blue,
                   image: DecorationImage(
                     image: AssetImage("assets/bg/LogoSmall.png"),
@@ -78,32 +69,75 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Text("PON A PRUEBA TU CONOCIMIENTO Y SELECCIONA LAS RESPUESTAS CORRECTAS",
-                      style: new TextStyle(
-                        color: Colors.blue,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w900
-                      ),
-                    ),
+                    Spacer(flex: 10),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Container(
+                          width: queryData.size.width - 100,
+                          child: new Text("PON A PRUEBA TU CONOCIMIENTO Y SELECCIONA LAS RESPUESTAS CORRECTAS",
+                             textAlign: TextAlign.center,
+                             style: new TextStyle(
+                               color: Colors.blue,
+                               fontSize: 28,
+                               fontWeight: FontWeight.w900
+                            ),
+                          )                        
+                        )
+                       ],
+                    ),                    
+                    Spacer(flex: 10),
                     new RaisedButton(
                       key: null,
+                      color: Colors.blue,
+                      textColor: Colors.white,
                       onPressed: buttonPressed,
-                      child: Text('text'),
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)
+                      ),
+                      child: Text('Siguiente',
+                        style: new TextStyle(
+                          fontSize: 18
+                        ),
+                      ),
                     )
                   ]),
             ))));
   }
 
   void buttonPressed() {
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     // return object of type Dialog
+    //     return new CupertinoAlertDialog(
+    //       title: new Text("Dialog Title"),
+    //       content: new Text("This is my content"),
+    //       actions: <Widget>[
+    //         CupertinoDialogAction(
+    //           isDefaultAction: true,
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text("Yes"),
+    //         ),
+    //         CupertinoDialogAction(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text("No"),
+    //         )
+    //       ],
+    //     );
+    //   },
+    // );
+
     Navigator.push(
       context,
-      CupertinoPageRoute(builder: (context) => Pantalla()),
+      CupertinoPageRoute(builder: (context) => PageRegistro()),
       // MaterialPageRoute(builder: (context) => Pantalla()),
     );
-
-    // Navigator.push(
-    // context,
-    // MaterialPageRoute(builder: (context) => Pantalla()),
-    // );
   }
 }
