@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'pantalla.dart';
 
 class PageRegistro extends StatelessWidget {
@@ -44,9 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      initialValue: 'alucard@gmail.com',
+      initialValue: 'nombre',
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: 'Nombre',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -54,10 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final password = TextFormField(
       autofocus: false,
-      initialValue: 'some password',
-      obscureText: true,
+      initialValue: 'Apellidos',
+      obscureText: false,
       decoration: InputDecoration(
-        hintText: 'Password',
+        hintText: 'Apellidos',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -70,11 +71,15 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          // Navigator.of(context).pushNamed(HomePage.tag);
+          Navigator.push(
+            context,
+            PageTransition(type: PageTransitionType.upToDown, child: Pantalla()),
+          );
+          // Navigator.of(context).pushReplacement(new Pantalla());
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightBlueAccent,
-        child: Text('Log In', style: TextStyle(color: Colors.white)),
+        child: Text('JUGAR', style: TextStyle(color: Colors.white)),
       ),
     );
 
