@@ -80,6 +80,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
               ]
             ),
       )
+      )
     );
   }
 
