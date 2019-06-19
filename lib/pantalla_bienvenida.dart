@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'registro.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 class PageBienvenida extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Generated App',
+      title: 'Wanapo Game',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: const Color(0xFF2196f3),
@@ -25,6 +27,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  AudioPlayer mainIntro = AudioPlayer();
+  // AudioPlayer mainGame = AudioPlayer();
+  // AudioPlayer wrong = AudioPlayer();
+  // AudioPlayer correct = AudioPlayer();
+  // AudioPlayer breaks = AudioPlayer();
+  // AudioPlayer letsPlay = AudioPlayer();
+  
+  AudioCache mainIntroCache = AudioCache(prefix: 'sonidos/');
+  // AudioCache mainGameCache = AudioCache(prefix: 'sonidos/');
+  // AudioCache wrongCache = AudioCache(prefix: 'sonidos/');
+  // AudioCache correctCache = AudioCache(prefix: 'sonidos/');
+  // AudioCache breaksCache = AudioCache(prefix: 'sonidos/');
+  // AudioCache letsPlayCache = AudioCache(prefix: 'sonidos/');
+
+  @override
+  initState() {
+    super.initState();
+    mainIntroCache.loadAll(['break.mp3', 'correct.mp3', 'lets_play.mp3', 'main.mp3', 'main_theme.mp3', 'wrong.mp3',]);
+    playAudio();
+  }
+
+  @override
+  void dispose() { 
+    super.dispose();    
+    // player.clearAll();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -107,6 +137,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ))));
   }
 
+  Future playAudio() async {
+    mainIntro = await mainIntroCache.loop('main_theme.mp3', isNotification: false);
+  }
+
   void buttonPressed() {
     // showDialog(
     //   context: context,
@@ -133,10 +167,10 @@ class _MyHomePageState extends State<MyHomePage> {
     //     );
     //   },
     // );
-
+    mainIntro.stop();
     Navigator.push(
       context,
-      CupertinoPageRoute(builder: (context) => PageRegistro()),
+      CupertinoPageRoute(builder: (context) => new PageRegistro()),
       // MaterialPageRoute(builder: (context) => Pantalla()),
     );
   }

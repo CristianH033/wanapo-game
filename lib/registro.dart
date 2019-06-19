@@ -1,34 +1,32 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
 
-class PageRegistro extends StatelessWidget {
+class PageRegistro extends StatefulWidget {
+  final mainIntro, mainIntroCache;
+  PageRegistro({Key key, @required this.mainIntro, @required this.mainIntroCache}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Generated App',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: const Color(0xFF2196f3),
-        accentColor: const Color(0xFF2196f3),
-        canvasColor: const Color(0xFFfafafa),
-      ),
-      home: new MyHomePage(),
-    );
-  }
+  _PageRegistroState createState() => new _PageRegistroState(mainIntro, mainIntroCache);
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _PageRegistroState extends State<PageRegistro> {
   TextEditingController nameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  AudioPlayer mainIntro;
+  AudioCache mainIntroCache;
+  _PageRegistroState(this.mainIntro, this.mainIntroCache);
+  @override
+  initState() {
+    super.initState();
+    playAudio();
+    // mainIntroCache.play('lets_play.mp3');
+    // mainIntroCache.loadAll(['break.mp3', 'correct.mp3', 'lets_play.mp3', 'main.mp3', 'main_theme.mp3', 'wrong.mp3',]);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +130,10 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       // Navigator.of(context).pop(newDog);
     }
+  }
+
+  Future playAudio() async {
+    mainIntro = await mainIntroCache.play('lets_play.mp3', isNotification: false);
   }
 
   void buttonPressed() {
