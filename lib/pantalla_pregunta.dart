@@ -72,7 +72,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                   height: queryData.size.height / 5,
                   child: new Center(
                     child: new Image(
-                      image: AssetImage("assets/bg/Logo.png"),
+                      image: AssetImage("assets/images/Logo.png"),
                       width: 200,
                     )
                   ),

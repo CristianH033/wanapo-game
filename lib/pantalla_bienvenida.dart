@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: BoxDecoration(
               // color: Colors.blue,
               image: DecorationImage(
-                image: AssetImage("assets/bg/EsquinaSup.png"),
+                image: AssetImage("assets/images/EsquinaSup.png"),
                 fit: BoxFit.none,
                 alignment: new Alignment(-1.0, -1.0),
               ),
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                   // color: Colors.blue,
                   image: DecorationImage(
-                image: AssetImage("assets/bg/EsquinaInf.png"),
+                image: AssetImage("assets/images/EsquinaInf.png"),
                 fit: BoxFit.none,
                 alignment: new Alignment(1.0, 1.0),
               )),
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                   // color: Colors.blue,
                   image: DecorationImage(
-                    image: AssetImage("assets/bg/LogoSmall.png"),
+                    image: AssetImage("assets/images/LogoSmall.png"),
                     fit: BoxFit.none,
                     alignment: new Alignment(1.0, -1.0),
               )),

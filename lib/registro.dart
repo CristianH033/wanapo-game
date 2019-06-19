@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: Image.asset('assets/bg/Logo.png'),
+        child: Image.asset('assets/images/Logo.png'),
       ),
     );
 

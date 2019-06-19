@@ -34,7 +34,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
               fit: BoxFit.cover,
               // alignment: new Alignment(1.0, 1.0),
               repeat: ImageRepeat.repeat,
-              image: AssetImage("assets/bg/electric4.gif")),
+              image: AssetImage("assets/gif/electric4.gif")),
             ),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -45,7 +45,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
                   height: queryData.size.height / 5,
                   child: new Center(
                     child: new Image(
-                      image: AssetImage("assets/bg/Logo.png"),
+                      image: AssetImage("assets/images/Logo.png"),
                       width: 200,
                     )
                   ),

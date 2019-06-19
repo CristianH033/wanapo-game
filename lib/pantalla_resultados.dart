@@ -35,7 +35,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                   height: queryData.size.height / 5,
                   child: new Center(
                     child: new Image(
-                      image: AssetImage("assets/bg/Logo.png"),
+                      image: AssetImage("assets/images/Logo.png"),
                       width: 200,
                     )
                   ),

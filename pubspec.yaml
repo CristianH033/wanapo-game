@@ -76,11 +76,9 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   assets:
-  - assets/bg/EsquinaSup.png
-  - assets/bg/EsquinaInf.png
-  - assets/bg/Logo.png
-  - assets/bg/LogoSmall.png
-  - assets/bg/electric.gif
-  - assets/bg/electric2.gif
-  - assets/bg/electric3.gif
-  - assets/bg/electric4.gif
+  - assets/images/EsquinaSup.png
+  - assets/images/EsquinaInf.png
+  - assets/images/Logo.png
+  - assets/images/LogoSmall.png
+  - assets/gif/electric3.gif
+  - assets/gif/electric4.gif
