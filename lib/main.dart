@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
-import 'pantalla.dart';
+import 'package:wanapo_game/pantalla_pregunta.dart';
 import 'pantalla_bienvenida.dart';
 
 void main() {
@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void buttonPressed() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Pantalla()),
+      MaterialPageRoute(builder: (context) => PantallaPregunta()),
     );
 
     // Navigator.push(

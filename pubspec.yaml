@@ -20,7 +20,9 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite: any
+  path_provider: any
   page_transition: any
+  countdown: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -78,3 +80,7 @@ flutter:
   - assets/bg/EsquinaInf.png
   - assets/bg/Logo.png
   - assets/bg/LogoSmall.png
+  - assets/bg/electric.gif
+  - assets/bg/electric2.gif
+  - assets/bg/electric3.gif
+  - assets/bg/electric4.gif

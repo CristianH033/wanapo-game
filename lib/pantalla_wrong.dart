@@ -1,35 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'components/boton_respuesta.dart';
-import 'components/label_pregunta.dart';
+import 'package:wanapo_game/components/label_wrong.dart';
+import 'package:wanapo_game/pantalla_pregunta.dart';
+import 'package:wanapo_game/pantalla_resultados.dart';
 import 'components/line_painter.dart';
 
-class Pantalla extends StatelessWidget {
+class PantallaWrong extends StatefulWidget {
+  final data, pregunta, index;
+  PantallaWrong({Key key, @required this.data, @required this.pregunta, @required this.index}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Generated App',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: const Color(0xFF2196f3),
-        accentColor: const Color(0xFF2196f3),
-        canvasColor: const Color(0xFFfafafa),
-      ),
-      home: new MyHomePage(),
-    );
-  }
+  _PantallaWrongState createState() => new _PantallaWrongState();
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _PantallaWrongState extends State<PantallaWrong> {
+  var data, pregunta, index;
   @override
   Widget build(BuildContext context) {
+    data = widget.data;
+    pregunta = widget.pregunta;
+    index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
     return new WillPopScope(
       key: null,
@@ -38,32 +28,15 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       child: new Scaffold(
         body: new Container(
-          decoration: BoxDecoration(
-            // color: Colors.blue,
-            image: DecorationImage(
-              image: AssetImage("assets/bg/EsquinaSup.png"),
-              fit: BoxFit.none,
-              alignment: new Alignment(-1.0, -1.0),
-            ),
-            gradient: RadialGradient(
-              focalRadius: 0.5,
-              radius: 1.6,
-              colors: [
-                Colors.white,
-                Colors.white,
-                Colors.grey,
-              ],
-            ),
-          ),
-          child: new Container(
             decoration: BoxDecoration(
-               image: DecorationImage(
-                image: AssetImage("assets/bg/EsquinaInf.png"),
-                fit: BoxFit.none,
-                alignment: new Alignment(1.0, 1.0),
-              )
+            color: Colors.black,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              // alignment: new Alignment(1.0, 1.0),
+              repeat: ImageRepeat.repeat,
+              image: AssetImage("assets/bg/electric4.gif")),
             ),
-            child: Column(
+            child: new Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   ),
                 ),
+                Spacer(flex: 1),
                 CustomPaint(
                   painter: LinePainter(),
                   child: new Row(
@@ -84,38 +58,28 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPregunta("Pregunta 1")
+                      new LabelWorong("RESPUESTA EQUIVOCADA")
                     ],
                   )
                 ),
-                CustomPaint(
-                  painter: LinePainter(),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new BotonRespuesta("Prueba 1", buttonPressed),
-                      new BotonRespuesta("Prueba 2", buttonPressed),
-                    ],
-                  )
-                ),
-                CustomPaint(
-                  painter: LinePainter(),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new BotonRespuesta("Prueba 1", buttonPressed),
-                      new BotonRespuesta("Prueba 2", buttonPressed),
-                    ],
-                  )
+                Spacer(flex: 1),
+                new RaisedButton(
+                  key: null,
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: buttonPressed,
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)
+                  ),
+                  child: Text('Continuar',
+                    style: new TextStyle(
+                      fontSize: 18
+                    ),
+                  ),
                 )
               ]
             ),
-          )
-        ),
+         )
       )
     );
   }
@@ -125,6 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void buttonPressed() {
+    var Page;    
+    if((index + 1) < data.length){
+      Page = new PantallaPregunta(data: data, pregunta: data[index+1], index: index+1);
+    }else{
+      Page = new PantallaResultados(data: data, pregunta: data[index], index: index);
+    }
     Navigator.pushReplacement(
       context,
       PageTransition(
@@ -132,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: Pantalla()
+        child: Page
       ),
     );
     // showDialog(

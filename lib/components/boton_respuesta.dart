@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 class BotonRespuesta extends StatelessWidget {
   // a property on this class
   final String text;
-  final void Function() callback;
+  final bool correcto;
+  final void Function( bool correcto) callback;
   // a constructor for this class
-  BotonRespuesta(this.text, this.callback);
+  BotonRespuesta(this.text, this.callback, this.correcto);
 
   Widget build(context) {
     // Pass the text down to another widget
     return new RaisedButton(
         key: null,
-        onPressed: callback,
+        onPressed: () => callback(correcto),
         splashColor: Colors.green,
         textColor: Colors.white,
         padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
