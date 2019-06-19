@@ -9,7 +9,7 @@
 
         {
             "name": "Flutter",
-            "flutterMode": "release",
+            "flutterMode": "debug",
             "request": "launch",
             "type": "dart"
         }
