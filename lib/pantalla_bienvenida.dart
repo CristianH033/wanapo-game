@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wanapo_game/sounds/player.dart';
 import 'registro.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:audioplayers/audio_cache.dart';
 
 class PageBienvenida extends StatelessWidget {
   @override
@@ -26,39 +25,47 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  AudioPlayer mainIntro = AudioPlayer();
-  // AudioPlayer mainGame = AudioPlayer();
-  // AudioPlayer wrong = AudioPlayer();
-  // AudioPlayer correct = AudioPlayer();
-  // AudioPlayer breaks = AudioPlayer();
-  // AudioPlayer letsPlay = AudioPlayer();
-  
-  AudioCache mainIntroCache = AudioCache(prefix: 'sonidos/');
-  // AudioCache mainGameCache = AudioCache(prefix: 'sonidos/');
-  // AudioCache wrongCache = AudioCache(prefix: 'sonidos/');
-  // AudioCache correctCache = AudioCache(prefix: 'sonidos/');
-  // AudioCache breaksCache = AudioCache(prefix: 'sonidos/');
-  // AudioCache letsPlayCache = AudioCache(prefix: 'sonidos/');
-
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   initState() {
     super.initState();
-    mainIntroCache.loadAll(['break.mp3', 'correct.mp3', 'lets_play.mp3', 'main.mp3', 'main_theme.mp3', 'wrong.mp3',]);
-    playAudio();
+    WidgetsBinding.instance.addObserver(this);
+    Player.playIntro();
   }
 
   @override
   void dispose() { 
-    super.dispose();    
+    WidgetsBinding.instance.removeObserver(this);  
+    super.dispose();  
     // player.clearAll();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch(state){
+      case AppLifecycleState.paused:
+        Player.pauseLoop();
+        print('paused state');
+        break;
+      case AppLifecycleState.resumed:
+        Player.resumeLoop();
+        print('resumed state');
+        break;
+      case AppLifecycleState.inactive:
+        print('inactive state');
+        break;
+      case AppLifecycleState.suspending:
+        print('suspending state');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     return new Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: new Container(
             decoration: BoxDecoration(
               // color: Colors.blue,
@@ -137,10 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ))));
   }
 
-  Future playAudio() async {
-    mainIntro = await mainIntroCache.loop('main_theme.mp3', isNotification: false);
-  }
-
   void buttonPressed() {
     // showDialog(
     //   context: context,
@@ -167,7 +170,8 @@ class _MyHomePageState extends State<MyHomePage> {
     //     );
     //   },
     // );
-    mainIntro.stop();
+
+    // Player.stop();
     Navigator.push(
       context,
       CupertinoPageRoute(builder: (context) => new PageRegistro()),

@@ -9,6 +9,8 @@ import 'package:wanapo_game/models/PreguntaModel.dart';
 import 'package:wanapo_game/models/RespuestaModel.dart';
 import 'package:wanapo_game/models/RespuestasPartidaModel.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:intl/intl.dart';
+import 'dart:io' as io;
 
 class DBProvider {
   DBProvider._();
@@ -18,10 +20,21 @@ class DBProvider {
   Database _database;
 
   Future<Database> get database async {
+    // await deleteDB();
     if (_database != null) return _database;
     // if _database is null we instantiate it
     _database = await initDB();
     return _database;
+  }
+
+  deleteDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "wanapo.db");
+    bool existe = await io.File(path).exists();
+    print(existe);
+    if( existe ){
+      await io.File(path).delete();
+    }
   }
 
   initDB() async {
@@ -33,12 +46,13 @@ class DBProvider {
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
         await db.execute(
-           "CREATE TABLE 'jugador'"
+           "CREATE TABLE 'jugadores'"
             "("
-            " 'id'               INTEGER PRIMARY KEY,"
+            " 'id'         INTEGER PRIMARY KEY,"
             " 'nombres'    varchar(255) NOT NULL ,"
             " 'apellidos'  varchar(255) NOT NULL ,"
-            " 'fecha_creacion'   datetime NOT NULL"
+            " 'correo'  varchar(255) NOT NULL ,"
+            " 'fecha_creacion'   varchar(255) NOT NULL"
             ")"
         );
 
@@ -47,7 +61,7 @@ class DBProvider {
             "("
             " 'id'         INTEGER PRIMARY KEY,"
             " 'jugador_id' integer NOT NULL ,"
-            " FOREIGN KEY ('jugador_id') REFERENCES 'jugador' ('id')"
+            " FOREIGN KEY ('jugador_id') REFERENCES 'jugadores' ('id')"
             ")"
         );
 
@@ -76,22 +90,22 @@ class DBProvider {
             "("
             " 'partida_id'   integer NOT NULL ,"
             " 'respuesta_id' integer NOT NULL ,"
-            " 'fecha'        datetime NOT NULL ,"
+            " 'fecha'        varchar(255) NOT NULL ,"
             " FOREIGN KEY ('partida_id') REFERENCES 'partidas' ('id'),"
             " FOREIGN KEY ('respuesta_id') REFERENCES 'respuestas' ('id')"
             ")"
         );
 
         await db.execute(
-            "INSERT INTO jugador"
-            "(id, nombres, apellidos, fecha_creacion)"
-            "VALUES(1057015139, 'Cristian', 'Home', 0)"
+            "INSERT INTO jugadores"
+            "(id, nombres, apellidos, correo, fecha_creacion)"
+            "VALUES(1057015139, 'Cristian', 'Home', 'cristian_david033@hotmail.com', 0)"
         );
 
         await db.execute(
             "INSERT INTO preguntas"
             "(id, texto, puntaje)"
-            "VALUES (1, 'Pregunta 1', 1),"
+            "VALUES (1, 'Capulinita', 1),"
             "(2, 'Pregunta 2', 1),"
             "(3, 'Pregunta 3', 1),"
             "(4, 'Pregunta 4', 1),"
@@ -106,7 +120,7 @@ class DBProvider {
         await db.execute(
             "INSERT INTO respuestas"
             "(id, texto, correcta, pregunta_id)"
-            "VALUES (1, 'Respuesta 1', 0, 1),"
+            "VALUES (1, 'Papu 1', 0, 1),"
             "(2, 'Respuesta 2', 0, 1),"
             "(3, 'Respuesta 3', 0, 1),"
             "(4, 'Respuesta 4', 1, 1),"
@@ -155,9 +169,9 @@ class DBProvider {
   newJugador(Jugador newJugador) async {
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into jugadores (id, nombres, apellidos)"
-        " VALUES (?,?,?)",
-        [newJugador.id, newJugador.nombres, newJugador.apellidos]);
+        "INSERT Into jugadores (id, nombres, apellidos, correo, fecha_creacion)"
+        "VALUES (?,?,?,?,?)",
+        [newJugador.id, newJugador.nombres, newJugador.apellidos, newJugador.correo, fechaNow()]);
     return raw;
   }
   // newEstado(Estado newEstado) async {
@@ -254,10 +268,17 @@ class DBProvider {
     return res.isNotEmpty ? Respuesta.fromMap(res.first) : null;
   }
 
+  Future<List<Respuesta>> getAllRespuestasPregunta(int preguntaId) async {
+    final db = await database;
+    var res = await db.query("respuestas", where: "pregunta_id = ?", whereArgs: [preguntaId]);
+    List<Respuesta> list = res.isNotEmpty ? res.map((c) => Respuesta.fromMap(c)).toList() : [];
+    return list;
+  }
+  
   Future<List<Respuesta>> getAllRespuestas() async {
     final db = await database;
     var res = await db.query("respuestas");
-    List<Respuesta> list = res.isNotEmpty ? res.map((c) => Pregunta.fromMap(c)).toList() : [];
+    List<Respuesta> list = res.isNotEmpty ? res.map((c) => Respuesta.fromMap(c)).toList() : [];
     return list;
   }
 
@@ -310,8 +331,8 @@ class DBProvider {
     final db = await database;
     var raw = await db.rawInsert(
         "INSERT Into respuestas_partida (partida_id, respuesta_id, fecha)"
-        " VALUES (?,?)",
-        [newRespuestasPartida.partidaId, newRespuestasPartida.respuestaId, '0']);
+        " VALUES (?,?,?)",
+        [newRespuestasPartida.partidaId, newRespuestasPartida.respuestaId, fechaNow()]);
     return raw;
   }
 
@@ -415,4 +436,13 @@ class DBProvider {
   //   final db = await database;
   //   db.rawDelete("Delete * from EstadosPerfil");
   // }
+
+
+  String fechaNow(){
+    var now = new DateTime.now();
+    var formatter = new DateFormat("yyyy/MM/dd 'a las' HH:mm:ss");
+    String formatted = formatter.format(now);
+    print(formatted);
+    return formatted;
+  }
 }

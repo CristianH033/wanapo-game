@@ -3,22 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
 import 'package:wanapo_game/pantalla_resultados.dart';
+import 'package:wanapo_game/sounds/player.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
 
 class PantallaPremio extends StatefulWidget {
-  final data, pregunta, index;
-  PantallaPremio({Key key, @required this.data, @required this.pregunta, @required this.index}) : super(key: key);
+  final partida, logRespuestas, preguntas, index;
+  PantallaPremio({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
   @override
   _PantallaPremioState createState() => new _PantallaPremioState();
 }
 
 class _PantallaPremioState extends State<PantallaPremio> {
-  var data, pregunta, index;
+  var partida, logRespuestas, preguntas, index;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Player.stop();
+    Player.playCorrect();
+  }
   @override
   Widget build(BuildContext context) {
-    data = widget.data;
-    pregunta = widget.pregunta;
+    partida = widget.partida;
+    logRespuestas = widget.logRespuestas;
+    preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
     return new WillPopScope(
@@ -90,10 +99,10 @@ class _PantallaPremioState extends State<PantallaPremio> {
 
   void buttonPressed() {
     var Page;    
-    if((index + 1) < data.length){
-      Page = new PantallaPregunta(data: data, pregunta: data[index+1], index: index+1);
+    if((index + 1) < preguntas.length){
+      Page = new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1);
     }else{
-      Page = new PantallaResultados(data: data, pregunta: data[index], index: index);
+      Page = new PantallaResultados(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index);
     }
     Navigator.pushReplacement(
       context,

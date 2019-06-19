@@ -5,54 +5,63 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_timeout.dart';
 import 'package:wanapo_game/pantalla_wrong.dart';
+import 'package:wanapo_game/sounds/player.dart';
 import 'components/boton_respuesta.dart';
 import 'components/label_pregunta.dart';
 import 'components/line_painter.dart';
+import 'database/Database.dart';
+import 'models/PreguntaModel.dart';
+import 'models/RespuestaModel.dart';
 import 'pantalla_premio.dart';
 import 'package:countdown/countdown.dart';
 
 class PantallaPregunta extends StatefulWidget {
-  final data, pregunta, index;
-  PantallaPregunta({Key key, @required this.data, @required this.pregunta, @required this.index}) : super(key: key);
+  final partida, logRespuestas, preguntas, index;
+  PantallaPregunta({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
   @override
   _PantallaPreguntaState createState() => new _PantallaPreguntaState();
 }
 
 class _PantallaPreguntaState extends State<PantallaPregunta> {
-  var data, pregunta, index, tiempo = 35, tiempoRestante = 35, w;
+  var partida, logRespuestas, preguntas, index, tiempo = 32, tiempoRestante = 32, w;
   // CountDown cd = CountDown(Duration(seconds : 30));
   var sub;
   @override
   void initState() {
       super.initState();
+      Player.stop();
+      Player.playLetsPlay();
+      Player.playMain();
       CountDown cd = CountDown(Duration(seconds : tiempo));
       sub = cd.stream.listen(null);
       sub.onData((Duration d) {
           this.setState(() {
             tiempoRestante = d.inSeconds.toInt();
           });
-          print(d.inSeconds);
+          // print(d.inSeconds);
       });
 
       sub.onDone(() {
         print("done");
         sub.cancel();
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            curve: Curves.bounceOut,
-            duration: Duration(seconds: 1),
-            alignment: Alignment.topCenter,
-            child: PantallaTimeOut(data: data, pregunta: data[index], index: index)
-          ),
-        );
+        Player.stop();
+        // Navigator.pushReplacement(
+        //   context,
+        //   PageTransition(
+        //     type: PageTransitionType.fade,
+        //     curve: Curves.bounceOut,
+        //     duration: Duration(seconds: 1),
+        //     alignment: Alignment.topCenter,
+        //     child: PantallaTimeOut(data: data, pregunta: data[index], index: index)
+        //   ),
+        // );
       });
   }
   @override
   Widget build(BuildContext context) {
-    data = widget.data;
-    pregunta = widget.pregunta;
+    partida = widget.partida;
+    logRespuestas = widget.logRespuestas;
+    preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
     w = (queryData.size.width * ((tiempoRestante*100)/30))/100;
@@ -62,7 +71,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
         return Future.value(_allow()); // if true allow back else block it
       },
       child: new Scaffold(
-        body: new Column(
+        body: FutureBuilder<List<Respuesta>>(
+        future: DBProvider.db.getAllRespuestasPregunta(preguntas[index].id),
+        builder: (BuildContext context, AsyncSnapshot<List<Respuesta>> respuestas) {
+          if (respuestas.hasData) {
+            return new Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +98,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPregunta(pregunta["texto"])
+                      new LabelPregunta(preguntas[index].texto)
                     ],
                   )
                 ),
@@ -97,8 +110,8 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new BotonRespuesta(pregunta["respuestas"][0]["texto"], buttonPressed, pregunta["respuestas"][0]["correcta"]),
-                      new BotonRespuesta(pregunta["respuestas"][1]["texto"], buttonPressed, pregunta["respuestas"][1]["correcta"]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[0]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[1]),
                     ],
                   )
                 ),
@@ -110,8 +123,8 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new BotonRespuesta(pregunta["respuestas"][2]["texto"], buttonPressed, pregunta["respuestas"][2]["correcta"]),
-                      new BotonRespuesta(pregunta["respuestas"][3]["texto"], buttonPressed, pregunta["respuestas"][3]["correcta"]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[2]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[3]),
                     ],
                   )
                 ),
@@ -142,7 +155,14 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                   ),
                 )
               ]
-            ),
+            );
+          }else{
+            return new Container(
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+         }
+        ),
       )
     );
   }
@@ -151,7 +171,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
     return false;
   }
 
-  void buttonPressed(bool correcta ) {
+  void buttonPressed(Respuesta respuesta ) {
     // Navigator.pushReplacement(
     //   context,
     //   PageTransition(
@@ -166,6 +186,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
+        Player.playFinal();
         return new CupertinoAlertDialog(
           title: new Text("Última Palabra?"),
           content: new Text(""),
@@ -174,8 +195,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
               isDefaultAction: true,
               onPressed: () {
                 sub.cancel();
+                Player.stop();
                 Navigator.of(context).pop();
-                if(correcta){
+                logRespuestas.add(respuesta.id);
+                print(logRespuestas);
+                if(respuesta.correcta){
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -183,7 +207,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: PantallaPremio(data: data, pregunta: data[index], index: index)
+                      child: new PantallaPremio(partida: index, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
                     ),
                   );
                 }else{
@@ -194,7 +218,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: PantallaWrong(data: data, pregunta: data[index], index: index)
+                      child: PantallaWrong(partida: index, logRespuestas: [], preguntas: preguntas, index: index)
                     ),
                   );
                 }

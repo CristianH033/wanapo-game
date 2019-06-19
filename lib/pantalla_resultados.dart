@@ -1,23 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:wanapo_game/pantalla_pregunta.dart';
+import 'package:wanapo_game/pantalla_bienvenida.dart';
+import 'package:wanapo_game/sounds/player.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
 
 class PantallaResultados extends StatefulWidget {
-  final data, pregunta, index;
-  PantallaResultados({Key key, @required this.data, @required this.pregunta, @required this.index}) : super(key: key);
+  final partida, logRespuestas, preguntas, index;
+  PantallaResultados({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
   @override
   _PantallaResultadosState createState() => new _PantallaResultadosState();
 }
 
 class _PantallaResultadosState extends State<PantallaResultados> {
-  var data, pregunta, index;
+  var partida, logRespuestas, preguntas, index;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Player.stop();
+    Player.playIntro();
+  }
   @override
   Widget build(BuildContext context) {
-    data = widget.data;
-    pregunta = widget.pregunta;
+    partida = widget.partida;
+    logRespuestas = widget.logRespuestas;
+    preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
     return new WillPopScope(
@@ -61,7 +70,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)
                   ),
-                  child: Text('Terminar',
+                  child: Text('Inicio',
                     style: new TextStyle(
                       fontSize: 18
                     ),
@@ -78,31 +87,16 @@ class _PantallaResultadosState extends State<PantallaResultados> {
   }
 
   void buttonPressed() {
-    
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     // return object of type Dialog
-    //     return new CupertinoAlertDialog(
-    //       title: new Text("Dialog Title"),
-    //       content: new Text("This is my content"),
-    //       actions: <Widget>[
-    //         CupertinoDialogAction(
-    //           isDefaultAction: true,
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("Yes"),
-    //         ),
-    //         CupertinoDialogAction(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("No"),
-    //         )
-    //       ],
-    //     );
-    //   },
-    // );
+    Player.stop();
+    Navigator.pushReplacement(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        curve: Curves.bounceOut,
+        duration: Duration(seconds: 1),
+        alignment: Alignment.topCenter,
+        child: new PageBienvenida()
+      ),
+    );
   }
 }

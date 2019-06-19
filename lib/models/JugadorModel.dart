@@ -15,22 +15,26 @@ class Jugador {
   int id;
   String nombres;
   String apellidos;
+  String correo;
 
   Jugador({
     this.id,
     this.nombres,
-    this.apellidos
+    this.apellidos,
+    this.correo
   });
 
   factory Jugador.fromMap(Map<String, dynamic> json) => new Jugador(
         id: json["id"],
         nombres: json["nombres"],
-        apellidos: json["apellidos"]
+        apellidos: json["apellidos"],
+        correo: json["correo"]
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
         "nombres": nombres,
-        "apellidos": apellidos
+        "apellidos": apellidos,
+        "correo": correo,
       };
 }

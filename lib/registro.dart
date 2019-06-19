@@ -1,32 +1,38 @@
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
+import 'package:wanapo_game/sounds/player.dart';
+
+import 'database/Database.dart';
+import 'models/JugadorModel.dart';
+import 'models/PartidaModel.dart';
+import 'models/PreguntaModel.dart';
 
 class PageRegistro extends StatefulWidget {
-  final mainIntro, mainIntroCache;
-  PageRegistro({Key key, @required this.mainIntro, @required this.mainIntroCache}) : super(key: key);
+  PageRegistro({Key key}) : super(key: key);
   @override
-  _PageRegistroState createState() => new _PageRegistroState(mainIntro, mainIntroCache);
+  _PageRegistroState createState() => new _PageRegistroState();
 }
 
 class _PageRegistroState extends State<PageRegistro> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  AudioPlayer mainIntro;
-  AudioCache mainIntroCache;
-  _PageRegistroState(this.mainIntro, this.mainIntroCache);
+  TextEditingController identificacionController = TextEditingController();
+  TextEditingController nombresController = TextEditingController();
+  TextEditingController apellidosController = TextEditingController();
+  TextEditingController correoController = TextEditingController();
+
+  bool _identificacionValid = true;
+  bool _nombresValid = true;
+  bool _apellidosValid = true;
+  bool _correoValid = true;
+
+
+  // _PageRegistroState();
   @override
   initState() {
     super.initState();
-    playAudio();
-    // mainIntroCache.play('lets_play.mp3');
-    // mainIntroCache.loadAll(['break.mp3', 'correct.mp3', 'lets_play.mp3', 'main.mp3', 'main_theme.mp3', 'wrong.mp3',]);
+    getPlayers();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,188 +46,150 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
 
+    final id = TextFormField(
+      keyboardType: TextInputType.number,
+      autofocus: true,
+      controller: identificacionController,
+      decoration: InputDecoration(
+        labelText: 'Identificación',
+        hintText: 'Identificación',
+        errorText: !_identificacionValid ? "El campo es requerido" : null,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      ),
+    );
+    
+    final nombres = TextFormField(
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      controller: nombresController,
+      decoration: InputDecoration(
+        labelText: 'Nombres',
+        hintText: 'Nombres',
+        errorText: !_nombresValid ? "El campo es requerido" : null,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      ),
+    );
+
+    final apellidos = TextFormField(
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      controller: apellidosController,
+      decoration: InputDecoration(
+        labelText: 'Apellidos',
+        hintText: 'Apellidos',
+        errorText: !_apellidosValid ? "El campo es requerido" : null,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      ),
+    );
+
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      initialValue: 'Campo',
+      controller: correoController,
       decoration: InputDecoration(
-        hintText: 'Nombre',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        labelText: 'E-mail',
+        hintText: 'E-mail',
+        errorText: !_correoValid ? "El campo es requerido" : null,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
 
-    final campox = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      initialValue: 'Campo',
-      decoration: InputDecoration(
-        hintText: 'Nombre',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+    final loginButton = new RaisedButton(
+      key: null,
+      color: Colors.blue,
+      textColor: Colors.white,
+      onPressed: buttonPressed,
+      shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(30.0)
       ),
-    );
-
-    final campoy = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      initialValue: 'Campo',
-      decoration: InputDecoration(
-        hintText: 'Nombre',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final password = TextFormField(
-      autofocus: false,
-      initialValue: 'Campo',
-      obscureText: false,
-      decoration: InputDecoration(
-        hintText: 'Apellidos',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+      child: Text('A Jugar',
+        style: new TextStyle(
+          fontSize: 18
         ),
-        onPressed: () {
-          buttonPressed();
-          // Navigator.of(context).pushReplacement(new Pantalla());
-        },
-        padding: EdgeInsets.all(12),
-        color: Colors.lightBlueAccent,
-        child: Text('JUGAR', style: TextStyle(color: Colors.white)),
       ),
     );
 
-    return Scaffold(
+    return new Scaffold(
+      resizeToAvoidBottomPadding : true,
+      resizeToAvoidBottomInset : true,
       // backgroundColor: Colors.white,
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
+      key: null,
+      body: SafeArea(
+          child: Container(
+            child: ListView(
+            padding: const EdgeInsets.all(30),
+            physics: BouncingScrollPhysics(),
+          // shrinkWrap: true,
+          // padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            children: <Widget>[
             logo,
             SizedBox(height: 48.0),
+            id,
+            SizedBox(height: 8.0),            
+            nombres,            
+            SizedBox(height: 8.0),
+            apellidos,
+            SizedBox(height: 8.0),
             email,
             SizedBox(height: 8.0),
-            password,
-            SizedBox(height: 8.0),
-            campox,
-            SizedBox(height: 8.0),
-            campoy,
-            SizedBox(height: 24.0),
             loginButton,
+            SizedBox(height: 200.0),
           ],
-        ),
+        )
+        )
       ),
     );
   }
 
-  void submitPup(BuildContext context) {
-    if (nameController.text.isEmpty) {
-      // print('Dogs need names!');
-    } else {
-      // Navigator.of(context).pop(newDog);
+  bool validar(){
+    setState(() {
+      _identificacionValid = identificacionController.text.isNotEmpty;
+      _nombresValid = nombresController.text.isNotEmpty;
+      _apellidosValid = apellidosController.text.isNotEmpty;
+      _correoValid = correoController.text.isNotEmpty;
+    });
+
+    return (_identificacionValid && _nombresValid && _apellidosValid && _correoValid);
+  }
+
+  nuevoJugador() async {    
+    Jugador nuevoJugador = new Jugador(
+      id: int.parse(identificacionController.text),
+      nombres: nombresController.text,
+      apellidos: apellidosController.text,
+      correo: correoController.text);
+    try {  
+      return await DBProvider.db.newJugador(nuevoJugador);
+    } catch (e) {
+      // mostrarDialogo("Error", "El jugador ya ha sido registrado");
+      print(e); 
+      var jugador = await DBProvider.db.getJugador(nuevoJugador.id);
+      return jugador.id;
     }
   }
 
-  Future playAudio() async {
-    mainIntro = await mainIntroCache.play('lets_play.mp3', isNotification: false);
-  }
+  void buttonPressed() async {
+    if(!validar()) return;    
 
-  void buttonPressed() {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     // return object of type Dialog
-    //     return new CupertinoAlertDialog(
-    //       title: new Text("Dialog Title"),
-    //       content: new Text("This is my content"),
-    //       actions: <Widget>[
-    //         CupertinoDialogAction(
-    //           isDefaultAction: true,
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("Yes"),
-    //         ),
-    //         CupertinoDialogAction(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("No"),
-    //         )
-    //       ],
-    //     );
-    //   },
+    var jugador = await nuevoJugador();
+    
+    if( jugador == null ){
+      return;
+    }
+
+    Partida nuevaPartida = new Partida(
+      jugadorId: jugador
+    );
+
+    var idPartida = await DBProvider.db.newPartida(nuevaPartida);
+    
+    List<Pregunta> preguntas = await DBProvider.db.getAllPreguntas();
+
+    // Partida partida = new Partida(
+    //   jugadorId: nuevoJugador.id
     // );
-
-    var data = [
-      { "pregunta": 1, "texto": "Pregunta 1", "respuestas": [
-          { "respuesta": 1, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 2, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 3, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      },
-      { "pregunta": 2, "texto": "Pregunta 2", "respuestas": [
-          { "respuesta": 1, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 2, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 3, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      },
-      { "pregunta": 3, "texto": "Pregunta 3", "respuestas": [
-          { "respuesta": 1, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 2, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 1, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      },
-      { "pregunta": 4, "texto": "Pregunta 4", "respuestas": [
-          { "respuesta": 1, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 3, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 2, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      },
-      { "pregunta": 5, "texto": "Pregunta 5", "respuestas": [
-          { "respuesta": 1, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 2, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-          { "respuesta": 1, "texto": "respuesta 1", "correcta": true },
-        ]
-      },
-      { "pregunta": 6, "texto": "Pregunta 6", "respuestas": [
-          { "respuesta": 3, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 1, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 2, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      },
-      { "pregunta": 7, "texto": "Pregunta 7", "respuestas": [
-          { "respuesta": 1, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 2, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 3, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      },
-      { "pregunta": 8, "texto": "Pregunta 8", "respuestas": [
-          { "respuesta": 3, "texto": "respuesta 2", "correcta": false },
-          { "respuesta": 2, "texto": "respuesta 3", "correcta": false },
-          { "respuesta": 1, "texto": "respuesta 1", "correcta": true },
-          { "respuesta": 4, "texto": "respuesta 4", "correcta": false },
-        ]
-      }
-    ];
-
+    Player.stop();
+    // Player.playLetsPlay();
     Navigator.pushReplacement(
       context,
       PageTransition(
@@ -229,7 +197,7 @@ class _PageRegistroState extends State<PageRegistro> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: PantallaPregunta(data: data, pregunta: data[0], index: 0)
+        child: new PantallaPregunta(partida: idPartida, logRespuestas: [], preguntas: preguntas, index: 0)
       ),
     );
     
@@ -238,5 +206,34 @@ class _PageRegistroState extends State<PageRegistro> {
       // CupertinoPageRoute(builder: (context) => Pantalla()),
       // MaterialPageRoute(builder: (context) => Pantalla()),
     // );
+  }
+
+  Future getPlayers() async {
+    List<Jugador> jugadores = await DBProvider.db.getAllJugadores();
+    jugadores.forEach((n) => print(n.id));
+    print('=========');
+  }
+
+  void mostrarDialogo(String titulo, String texto){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        Player.playFinal();
+        return new CupertinoAlertDialog(
+          title: new Text(titulo),
+          content: new Text(texto),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Ok"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
