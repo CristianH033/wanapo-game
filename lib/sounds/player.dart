@@ -11,6 +11,7 @@ class Player {
   static final Player _player = new Player._internal();
 
   factory Player() {
+    AudioPlayer.logEnabled = true;
     cache.loadAll(sonidos);
     return _player;
   }

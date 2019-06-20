@@ -2,33 +2,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_bienvenida.dart';
+import 'package:wanapo_game/pantalla_detalles_partida.dart';
 import 'package:wanapo_game/sounds/player.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
+import 'components/list_tile.dart';
+import 'database/Database.dart';
+import 'models/PartidaModel.dart';
+import 'models/RespuestasPartidaModel.dart';
 
 class PantallaResultados extends StatefulWidget {
-  final partida, logRespuestas, preguntas, index;
-  PantallaResultados({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
+  final partidaActual, logRespuestas;
+  PantallaResultados({Key key, @required this.partidaActual, @required this.logRespuestas}) : super(key: key);
   @override
   _PantallaResultadosState createState() => new _PantallaResultadosState();
 }
 
 class _PantallaResultadosState extends State<PantallaResultados> {
-  var partida, logRespuestas, preguntas, index;
+  var partidaActual, logRespuestas;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Player.stop();
     Player.playIntro();
+
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => guardarPartida(context));
   }
   @override
   Widget build(BuildContext context) {
-    partida = widget.partida;
+    partidaActual = widget.partidaActual;
     logRespuestas = widget.logRespuestas;
-    preguntas = widget.preguntas;
-    index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
+
     return new WillPopScope(
       key: null,
       onWillPop: () {
@@ -41,7 +47,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Container(
-                  height: queryData.size.height / 5,
+                  height: queryData.size.height / 7,
                   child: new Center(
                     child: new Image(
                       image: AssetImage("assets/images/Logo.png"),
@@ -49,7 +55,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                     )
                   ),
                 ),
-                Spacer(flex: 1),
+                // Spacer(flex: 1),
                 CustomPaint(
                   painter: LinePainter(),
                   child: new Row(
@@ -57,11 +63,38 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("Resultados:")
+                      Padding(
+                        padding: EdgeInsets.all(12),
+                        child: new LabelPremio("Resultados:")
+                      ,)
                     ],
                   )
                 ),
-                Spacer(flex: 1),
+                // Spacer(flex: 1),
+                new Expanded(
+                  child: FutureBuilder<List<Partida>>(
+                    future: DBProvider.db.getAllPartidas(),
+                    builder: (BuildContext context, AsyncSnapshot<List<Partida>> partidas) {
+                      if (partidas.hasData) {
+                        return new Container(
+                          child: ListView.separated(
+                            physics: BouncingScrollPhysics(),
+                            itemCount: partidas.data.length,
+                            separatorBuilder: (BuildContext context, int index) => Divider(),
+                            itemBuilder: (BuildContext context, int index) {
+                              Partida partida = partidas.data[index];
+                              return ListTilePartida(entrarPartida, partida, partidaActual);
+                            }
+                          )
+                        );
+                      }else{
+                        return new Container(
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
+                    })  
+                ),                
+                // Spacer(flex: 1),
                 new RaisedButton(
                   key: null,
                   color: Colors.blue,
@@ -83,7 +116,35 @@ class _PantallaResultadosState extends State<PantallaResultados> {
   }
 
   bool _allow() {
-    return false;
+    return true;
+  }
+
+  void entrarPartida(Partida partida){
+    Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => new PantallaPartidaDetalles(partida: partida)),
+      // MaterialPageRoute(builder: (context) => Pantalla()),
+    );
+  }
+
+  void guardarPartida(BuildContext context) async {
+    print(logRespuestas);
+    print("Partida actual: $partidaActual");
+    print("Guardando...");
+    logRespuestas.forEach((respuesta){
+      RespuestasPartida respuestaPartida = new RespuestasPartida(
+        respuestaId: respuesta,
+        partidaId: partidaActual
+      );
+      print(respuestaPartida);
+      print(respuestaPartida.respuestaId);
+      guardarRespuesta(respuestaPartida);
+    });
+    print("Guardado");
+  }
+
+  Future guardarRespuesta(RespuestasPartida r) async {
+    await DBProvider.db.newRespuestasPartida(r);
   }
 
   void buttonPressed() {

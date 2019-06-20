@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wanapo_game/pantalla_resultados.dart';
 import 'package:wanapo_game/sounds/player.dart';
 import 'registro.dart';
 
@@ -126,22 +127,53 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                        ],
                     ),                    
                     Spacer(flex: 10),
-                    new RaisedButton(
-                      key: null,
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      onPressed: buttonPressed,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)
-                      ),
-                      child: Text('Siguiente',
-                        style: new TextStyle(
-                          fontSize: 18
+                    new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        new RaisedButton(
+                          key: null,
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          onPressed: buttonPressed2,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)
+                          ),
+                          child: Text('Registros',
+                            style: new TextStyle(
+                                fontSize: 18
+                            ),
+                          ),
                         ),
-                      ),
-                    )
+                        new RaisedButton(
+                          key: null,
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          onPressed: buttonPressed,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)
+                          ),
+                          child: Text('Siguiente',
+                            style: new TextStyle(
+                                fontSize: 18
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+
                   ]),
             ))));
+  }
+
+  void buttonPressed2(){
+    // Player.stop();
+    Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => new PantallaResultados(partidaActual: null, logRespuestas: [])),
+      // MaterialPageRoute(builder: (context) => Pantalla()),
+    );
   }
 
   void buttonPressed() {

@@ -14,7 +14,7 @@ String respuestasPartidaToJson(RespuestasPartida data) {
 class RespuestasPartida {
   int partidaId;
   int respuestaId;
-  DateTime fecha;
+  String fecha;
 
   RespuestasPartida({
     this.partidaId,

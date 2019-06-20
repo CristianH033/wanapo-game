@@ -14,19 +14,23 @@ String partidaToJson(Partida data) {
 class Partida {
   int id;
   int jugadorId;
+  String fechaCreacion;
   
   Partida({
     this.id,
-    this.jugadorId
+    this.jugadorId,
+    this.fechaCreacion,
   });
 
   factory Partida.fromMap(Map<String, dynamic> json) => new Partida(
         id: json["id"],
         jugadorId: json["jugador_id"],
+        fechaCreacion: json["fecha_creacion"],
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "jugador_id": jugadorId
+        "jugador_id": jugadorId,
+        "fecha_creacion": fechaCreacion
       };
 }

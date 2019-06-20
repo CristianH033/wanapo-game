@@ -45,16 +45,16 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
         print("done");
         sub.cancel();
         Player.stop();
-        // Navigator.pushReplacement(
-        //   context,
-        //   PageTransition(
-        //     type: PageTransitionType.fade,
-        //     curve: Curves.bounceOut,
-        //     duration: Duration(seconds: 1),
-        //     alignment: Alignment.topCenter,
-        //     child: PantallaTimeOut(data: data, pregunta: data[index], index: index)
-        //   ),
-        // );
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            type: PageTransitionType.fade,
+            curve: Curves.bounceOut,
+            duration: Duration(seconds: 1),
+            alignment: Alignment.topCenter,
+            child: PantallaTimeOut(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+          ),
+        );
       });
   }
   @override
@@ -64,7 +64,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
     preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
-    w = (queryData.size.width * ((tiempoRestante*100)/30))/100;
+    w = (queryData.size.width * ((tiempoRestante*100)/32))/100;
     return new WillPopScope(
       key: null,
       onWillPop: () {
@@ -82,11 +82,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
               children: <Widget>[
                 Spacer(flex: 1),
                 new Container(
-                  height: queryData.size.height / 5,
+//                  height: queryData.size.height / 5,
                   child: new Center(
                     child: new Image(
                       image: AssetImage("assets/images/Logo.png"),
-                      width: 200,
+                      width: queryData.size.width/1.6,
                     )
                   ),
                 ),
@@ -129,31 +129,70 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                   )
                 ),
                 Spacer(flex: 1),
-                new Material(
-                  shape: const BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    side: BorderSide(color: Colors.blue, width: 3),
-                  ),
-                  child: new Container(
-                    padding: EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 20),
-                    child: new Text('$tiempoRestante', style: new TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)
-                  )
+//                CustomPaint(
+//                    painter: LinePainter(),
+//                    child: new Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                      mainAxisSize: MainAxisSize.max,
+//                      crossAxisAlignment: CrossAxisAlignment.center,
+//                      children: <Widget>[
+//                        new BotonRespuesta(buttonPressed, respuestas.data[2]),
+////                        new BotonRespuesta(buttonPressed, respuestas.data[3]),
+//                      ],
+//                    )
+//                ),
+//                Spacer(flex: 1),
+//                CustomPaint(
+//                    painter: LinePainter(),
+//                    child: new Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                      mainAxisSize: MainAxisSize.max,
+//                      crossAxisAlignment: CrossAxisAlignment.center,
+//                      children: <Widget>[
+////                        new BotonRespuesta(buttonPressed, respuestas.data[2]),
+//                        new BotonRespuesta(buttonPressed, respuestas.data[3]),
+//                      ],
+//                    )
+//                ),
+//                Spacer(flex: 1),
+//                new Material(
+//                  shape: const BeveledRectangleBorder(
+//                    borderRadius: BorderRadius.all(Radius.circular(50)),
+//                    side: BorderSide(color: Colors.blue, width: 3),
+//                  ),
+//                  child: new Container(
+//                      padding: EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 20),
+//                      child: new Text('$tiempoRestante', style: new TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)
+//                  )
+//                ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    new Container(
+                      height: 10,
+                      width: w,
+                      alignment: Alignment(-10, -10),
+                      decoration: BoxDecoration(
+                          borderRadius: new BorderRadius.all(new Radius.circular(10)),
+                          boxShadow: [
+                            new BoxShadow(
+                              color: tiempoRestante < 10 ? Colors.red : Colors.green,
+                              offset: new Offset(0.0, 0.0),
+                              blurRadius: 2.0,
+                            )
+                          ],
+                          color: tiempoRestante < 10 ? Colors.red : Colors.green
+                      ),
+                    ),
+                    new Text('$tiempoRestante',
+                      style: new TextStyle(
+                          color: tiempoRestante < 10 ? Colors.red : Colors.green,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
+                  ],
                 ),
-                new Container(
-                  height: 10,
-                  width: w,
-                  decoration: BoxDecoration(
-                    borderRadius: new BorderRadius.all(new Radius.circular(10)),
-                    boxShadow: [
-                      new BoxShadow(
-                        color: Colors.red,
-                        offset: new Offset(0.0, 0.0),
-                        blurRadius: 2.0,
-                      )
-                    ],
-                    color: Colors.red
-                  ),
-                )
               ]
             );
           }else{
@@ -199,7 +238,9 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 Navigator.of(context).pop();
                 logRespuestas.add(respuesta.id);
                 print(logRespuestas);
+                print("index: $index");
                 if(respuesta.correcta){
+                  print("Id de partida en pregunta: $partida");
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -207,7 +248,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: new PantallaPremio(partida: index, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+                      child: new PantallaPremio(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
                     ),
                   );
                 }else{
@@ -218,7 +259,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: PantallaWrong(partida: index, logRespuestas: [], preguntas: preguntas, index: index)
+                      child: PantallaWrong(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
                     ),
                   );
                 }

@@ -46,10 +46,14 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
 
-    final id = TextFormField(
+    final id = TextField(
       keyboardType: TextInputType.number,
       autofocus: true,
       controller: identificacionController,
+      onChanged: (text) {
+        searchJugador();
+      },
+      onEditingComplete: searchJugador,
       decoration: InputDecoration(
         labelText: 'Identificación',
         hintText: 'Identificación',
@@ -58,7 +62,7 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
     
-    final nombres = TextFormField(
+    final nombres = TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
       controller: nombresController,
@@ -70,7 +74,7 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
 
-    final apellidos = TextFormField(
+    final apellidos = TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
       controller: apellidosController,
@@ -82,7 +86,7 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
 
-    final email = TextFormField(
+    final email = TextField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       controller: correoController,
@@ -110,8 +114,6 @@ class _PageRegistroState extends State<PageRegistro> {
     );
 
     return new Scaffold(
-      resizeToAvoidBottomPadding : true,
-      resizeToAvoidBottomInset : true,
       // backgroundColor: Colors.white,
       key: null,
       body: SafeArea(
@@ -131,9 +133,16 @@ class _PageRegistroState extends State<PageRegistro> {
             apellidos,
             SizedBox(height: 8.0),
             email,
-            SizedBox(height: 8.0),
-            loginButton,
-            SizedBox(height: 200.0),
+            SizedBox(height: 30.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                loginButton
+              ],
+            ),
+            SizedBox(height: queryData.size.height/2.6),
           ],
         )
         )
@@ -141,15 +150,37 @@ class _PageRegistroState extends State<PageRegistro> {
     );
   }
 
+  bool _isNumeric(String str) {
+    if(str == null) {
+      return false;
+    }
+    return int.tryParse(str) != null;
+  }
+
   bool validar(){
     setState(() {
-      _identificacionValid = identificacionController.text.isNotEmpty;
+      _identificacionValid = identificacionController.text.isNotEmpty && _isNumeric(identificacionController.text) ;
       _nombresValid = nombresController.text.isNotEmpty;
       _apellidosValid = apellidosController.text.isNotEmpty;
       _correoValid = correoController.text.isNotEmpty;
     });
 
     return (_identificacionValid && _nombresValid && _apellidosValid && _correoValid);
+  }
+
+  searchJugador() async {
+    int id = int.tryParse(identificacionController.text);
+    if(id != null){
+      Jugador j = await DBProvider.db.getJugador(id);
+      print(j);
+      if(j != null){
+        setState(() {
+          nombresController.text = j.nombres;
+          apellidosController.text = j.apellidos;
+          correoController.text = j.correo;
+        });
+      }
+    }
   }
 
   nuevoJugador() async {    
@@ -182,8 +213,12 @@ class _PageRegistroState extends State<PageRegistro> {
     );
 
     var idPartida = await DBProvider.db.newPartida(nuevaPartida);
+
+    print("ID de partida en registr: $idPartida");
     
     List<Pregunta> preguntas = await DBProvider.db.getAllPreguntas();
+
+    preguntas.shuffle();
 
     // Partida partida = new Partida(
     //   jugadorId: nuevoJugador.id

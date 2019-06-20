@@ -67,7 +67,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("GANASTE UN PREMIO X")
+                      new LabelPremio("CORRECTO!")
                     ],
                   )
                 ),
@@ -98,22 +98,30 @@ class _PantallaPremioState extends State<PantallaPremio> {
   }
 
   void buttonPressed() {
-    var Page;    
     if((index + 1) < preguntas.length){
-      Page = new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1);
-    }else{
-      Page = new PantallaResultados(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index);
-    }
-    Navigator.pushReplacement(
+      Navigator.pushReplacement(
       context,
       PageTransition(
         type: PageTransitionType.size,
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: Page
+        child: new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
       ),
     );
+      
+    }else{
+      Navigator.pushReplacement(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        // curve: Curves.bounceOut,
+        duration: Duration(seconds: 1),
+        alignment: Alignment.topCenter,
+        child: new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas),
+      ),
+    );
+    }
     // showDialog(
     //   context: context,
     //   builder: (BuildContext context) {

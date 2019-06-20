@@ -98,7 +98,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
     if ((index + 1) < preguntas.length) {
       Page = new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1);
     } else {
-      Page = new PantallaResultados(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index);
+      Page = new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas);
     }
     Navigator.pushReplacement(
       context,

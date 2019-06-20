@@ -17,13 +17,13 @@ class LabelPregunta extends StatelessWidget {
       ),
       color: Colors.white,
       child: new Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+        padding: EdgeInsets.only(right: 15, left: 15, bottom: 15, top: 15),
         constraints: BoxConstraints(maxWidth: queryData.size.width - 100),
         margin: const EdgeInsets.only(
             left: 40.0, right: 40.0, top: 10.0, bottom: 10.0),
         child: new Text(
           text,
-          textAlign: TextAlign.justify,
+          textAlign: TextAlign.center,
           style: new TextStyle(
               fontSize: 20.0,
               color: Colors.blue,

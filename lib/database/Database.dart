@@ -61,6 +61,7 @@ class DBProvider {
             "("
             " 'id'         INTEGER PRIMARY KEY,"
             " 'jugador_id' integer NOT NULL ,"
+            " 'fecha_creacion'   varchar(255) NOT NULL,"
             " FOREIGN KEY ('jugador_id') REFERENCES 'jugadores' ('id')"
             ")"
         );
@@ -96,70 +97,65 @@ class DBProvider {
             ")"
         );
 
-        await db.execute(
-            "INSERT INTO jugadores"
-            "(id, nombres, apellidos, correo, fecha_creacion)"
-            "VALUES(1057015139, 'Cristian', 'Home', 'cristian_david033@hotmail.com', 0)"
-        );
+        // await db.execute(
+        //     "INSERT INTO jugadores"
+        //     "(id, nombres, apellidos, correo, fecha_creacion)"
+        //     "VALUES(1057015139, 'Cristian', 'Home', 'cristian_david033@hotmail.com', 0)"
+        // );
 
         await db.execute(
             "INSERT INTO preguntas"
             "(id, texto, puntaje)"
-            "VALUES (1, 'Capulinita', 1),"
-            "(2, 'Pregunta 2', 1),"
-            "(3, 'Pregunta 3', 1),"
-            "(4, 'Pregunta 4', 1),"
-            "(5, 'Pregunta 5', 1),"
-            "(6, 'Pregunta 6', 1),"
-            "(7, 'Pregunta 7', 1),"
-            "(8, 'Pregunta 8', 1),"
-            "(9, 'Pregunta 9', 1),"
-            "(10, 'Pregunta 10', 1)"
+            "VALUES (1, 'Según los datos presentados por el censo del Dane 2005 la población aproximada de la etnia Wayuu en el territorio nacional era de aproximadamente:', 1),"
+            "(2, 'Para construir Líneas de alta Tensión en Colombia se requiere:', 1),"
+            "(3, 'Dentro de la cosmovisión del pueblo Wayuu se identifican diferentes tipologías de lugares las cuales presentan varias connotaciones dentro del pensamiento y las tradiciones del pueblo Wayuu, estos son:', 1),"
+            "(4, 'Los Wayuu son un pueblo:', 1),"
+            "(5, 'El mestizaje racial en Colombia está conformado por:', 1),"
+            "(6, 'La Mayor parte de la energía en Colombia provienen de:', 1),"
+            "(7, 'La práctica cultural de “Desentierro” o “Segundo Velorio” los WAYUU la realizan entre los meses de:', 1),"
+            "(8, 'La palabra Energía Eléctrica en WAYUUNAIKI se escribe', 1),"
+            "(9, '¿Cuál es el Nombre de la Ministra De Minas y Energía?', 1)"
         );
 
         await db.execute(
             "INSERT INTO respuestas"
             "(id, texto, correcta, pregunta_id)"
-            "VALUES (1, 'Papu 1', 0, 1),"
-            "(2, 'Respuesta 2', 0, 1),"
-            "(3, 'Respuesta 3', 0, 1),"
-            "(4, 'Respuesta 4', 1, 1),"
-            "(5, 'Respuesta 1', 0, 2),"
-            "(6, 'Respuesta 2', 0, 2),"
-            "(7, 'Respuesta 3', 0, 2),"
-            "(8, 'Respuesta 4', 1, 2),"
-            "(9, 'Respuesta 1', 0, 3),"
-            "(10, 'Respuesta 2', 0, 3),"
-            "(11, 'Respuesta 3', 0, 3),"
-            "(12, 'Respuesta 4', 1, 3),"
-            "(13, 'Respuesta 1', 0, 4),"
-            "(14, 'Respuesta 2', 0, 4),"
-            "(15, 'Respuesta 3', 0, 4),"
-            "(16, 'Respuesta 4', 1, 4),"
-            "(17, 'Respuesta 1', 0, 5),"
-            "(18, 'Respuesta 2', 0, 5),"
-            "(19, 'Respuesta 3', 0, 5),"
-            "(20, 'Respuesta 4', 1, 5),"
-            "(21, 'Respuesta 1', 0, 6),"
-            "(22, 'Respuesta 2', 0, 6),"
-            "(23, 'Respuesta 3', 0, 6),"
-            "(24, 'Respuesta 4', 1, 6),"
-            "(25, 'Respuesta 1', 0, 7),"
-            "(26, 'Respuesta 2', 0, 7),"
-            "(27, 'Respuesta 3', 0, 7),"
-            "(28, 'Respuesta 4', 1, 7),"
-            "(29, 'Respuesta 1', 0, 8),"
-            "(30, 'Respuesta 2', 0, 8),"
-            "(31, 'Respuesta 3', 0, 8),"
-            "(32, 'Respuesta 4', 1, 8),"
-            "(33, 'Respuesta 1', 0, 9),"
-            "(34, 'Respuesta 2', 0, 9),"
-            "(35, 'Respuesta 3', 0, 9),"
-            "(36, 'Respuesta 4', 1, 9),"
-            "(37, 'Respuesta 1', 0, 10),"
-            "(38, 'Respuesta 2', 0, 10),"
-            "(39, 'Respuesta 3', 0, 10),"
-            "(40, 'Respuesta 4', 1, 10)"
+            "VALUES (1,'Entre 150.000 a 200.000 Personas',0,1),"
+            "(2,'Entre 900.000 a 950.000 Personas',0,1),"
+            "(3,'Entre 250.000 a 300.000 Personas (270.413)',1,1),"
+            "(4,'Ninguna de las Anteriores',0,1),"
+            "(5,'Licencia Ambiental.',0,2),"
+            "(6,'Permisos Ambientales ante autoridades regionales competentes',0,2),"
+            "(7,'Prospecciones Arqueológica',0,2),"
+            "(8,'Todas las Anteriores',1,2),"
+            "(9,'Prohibidos, Encantados, Comunales',1,3),"
+            "(10,'Divinos, Prohibidos, Cementerios',0,3),"
+            "(11,'Encantados, Cementerios, Divinos',0,3),"
+            "(12,'Ninguna de las Anteriores',0,3),"
+            "(13,'Sedentario',0,4),"
+            "(14,'Nómada',1,4),"
+            "(15,'Todas las anteriores',0,4),"
+            "(16,'Ninguna de las Anteriores',0,4),"
+            "(17,'Negros, blancos y asiáticos .',0,5),"
+            "(18,'Afro descendientes, amerindios y norteamericanos.',0,5),"
+            "(19,'Amerindios, blancos y negros',1,5),"
+            "(20,'???',0,5),"
+            "(21,'Generación Hidráulica',1,6),"
+            "(22,'Generación Térmica',0,6),"
+            "(23,'Generación Eólica',0,6),"
+            "(24,'Generación Solar',0,6),"
+            "(25,'Enero y abril',0,7),"
+            "(26,'Diciembre y marzo',0,7),"
+            "(27,'Noviembre y febrero',1,7),"
+            "(28,'Todas las Anteriores',0,7),"
+            "(29,'Sütchin lüsu',1,8),"
+            "(30,'Ayuuli',0,8),"
+            "(31,'Jashichii',0,8),"
+            "(32,'Luma',0,8),"
+            "(33,'Maria Fernanda Suárez',1,9),"
+            "(34,'Maria Fernanda Perez',0,9),"
+            "(35,'Maria Fernanda Perez',0,9),"
+            "(36,'Ninguna de las Anteriores',0,9)"
         );
       }
     );
@@ -287,12 +283,13 @@ class DBProvider {
     final db = await database;
     //get the biggest id in the table
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM partidas");
-    int id = table.first["id"];
+    int id = table.first["id"] == null ? 1 : table.first["id"];
+    print("Id de partida en DB: $id");
     //insert to the table using the new id
     var raw = await db.rawInsert(
-        "INSERT Into partidas (id, jugador_id)"
-        " VALUES (?,?)",
-        [id, newPartida.jugadorId]);
+        "INSERT Into partidas (id, jugador_id, fecha_creacion)"
+        " VALUES (?,?,?)",
+        [id, newPartida.jugadorId, fechaNow()]);
     return raw;
   }
 
@@ -336,16 +333,24 @@ class DBProvider {
     return raw;
   }
 
-  getRespuestasPartida(int id) async {
+  Future<List<RespuestasPartida>> getRespuestasPartida(int id) async {
+    print(id);
     final db = await database;
     var res = await db.query("respuestas_partida", where: "partida_id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? RespuestasPartida.fromMap(res.first) : null;
+    print(res);
+    List<RespuestasPartida> list = res.isNotEmpty ? res.map((c) => RespuestasPartida.fromMap(c)).toList() : [];
+    print(list);
+    // print(list[0].respuestaId);
+    // print(list[0].fecha);
+    return list;
   }
 
   Future<List<RespuestasPartida>> getAllRespuestasPartidas() async {
     final db = await database;
     var res = await db.query("respuestas_partida");
+    print(res);
     List<RespuestasPartida> list = res.isNotEmpty ? res.map((c) => RespuestasPartida.fromMap(c)).toList() : [];
+    print(list);
     return list;
   }
 
