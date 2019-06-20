@@ -232,7 +232,7 @@ class _PageRegistroState extends State<PageRegistro> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: new PantallaPregunta(partida: idPartida, logRespuestas: [], preguntas: preguntas.take(8).toList(), index: 0)
+        child: new PantallaPregunta(partida: idPartida, logRespuestas: [], preguntas: preguntas, index: 0)
       ),
     );
     
