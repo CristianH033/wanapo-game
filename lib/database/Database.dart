@@ -139,7 +139,7 @@ class DBProvider {
             "(17,'Negros, blancos y asiáticos .',0,5),"
             "(18,'Afro descendientes, amerindios y norteamericanos.',0,5),"
             "(19,'Amerindios, blancos y negros',1,5),"
-            "(20,'???',0,5),"
+            "(20,'Pastusos, paisas y costeños',0,5),"
             "(21,'Generación Hidráulica',1,6),"
             "(22,'Generación Térmica',0,6),"
             "(23,'Generación Eólica',0,6),"
@@ -154,7 +154,7 @@ class DBProvider {
             "(32,'Luma',0,8),"
             "(33,'Maria Fernanda Suárez',1,9),"
             "(34,'Maria Fernanda Perez',0,9),"
-            "(35,'Maria Fernanda Perez',0,9),"
+            "(35,'Maria Alejandra Perez',0,9),"
             "(36,'Ninguna de las Anteriores',0,9)"
         );
       }

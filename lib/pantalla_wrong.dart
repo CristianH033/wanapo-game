@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/components/label_wrong.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
+import 'package:wanapo_game/pantalla_premio.dart';
 import 'package:wanapo_game/pantalla_resultados.dart';
 import 'package:wanapo_game/sounds/player.dart';
 import 'components/line_painter.dart';
+import 'database/Database.dart';
+import 'models/RespuestaModel.dart';
 
 class PantallaWrong extends StatefulWidget {
   final partida, logRespuestas, preguntas, index;
@@ -16,12 +19,16 @@ class PantallaWrong extends StatefulWidget {
 
 class _PantallaWrongState extends State<PantallaWrong> {
   var partida, logRespuestas, preguntas, index;
+  int _correctas = 0;
+  String _textoPremio = "";  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Player.stop();
     Player.playWrong();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => startUp(context));
   }
   @override
   Widget build(BuildContext context) {
@@ -98,46 +105,68 @@ class _PantallaWrongState extends State<PantallaWrong> {
   }
 
   void buttonPressed() {
-    var Page;    
     if((index + 1) < preguntas.length){
-      Page = new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1);
-    }else{
-      Page = new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas);
-    }
-    Navigator.pushReplacement(
+      Navigator.pushReplacement(
       context,
       PageTransition(
         type: PageTransitionType.size,
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: Page
+        child: new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
       ),
     );
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     // return object of type Dialog
-    //     return new CupertinoAlertDialog(
-    //       title: new Text("Dialog Title"),
-    //       content: new Text("This is my content"),
-    //       actions: <Widget>[
-    //         CupertinoDialogAction(
-    //           isDefaultAction: true,
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("Yes"),
-    //         ),
-    //         CupertinoDialogAction(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("No"),
-    //         )
-    //       ],
-    //     );
-    //   },
-    // );
+      
+    }else{
+      if(_correctas >= 2){
+         Navigator.pushReplacement(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          // curve: Curves.bounceOut,
+          duration: Duration(seconds: 1),
+          alignment: Alignment.topCenter,
+          child: new PantallaPremio(partida: partida, logRespuestas: logRespuestas, index: index, preguntas: preguntas, textoPremio: _textoPremio,),
+          ),
+        );
+      }else{
+        Navigator.pushReplacement(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          // curve: Curves.bounceOut,
+          duration: Duration(seconds: 1),
+          alignment: Alignment.topCenter,
+          child: new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas),
+          ),
+        );
+      }      
+    }
+  }
+
+  startUp(BuildContext context) async {
+    print("asyncOne start");
+    int count = 0;
+    for (int id in logRespuestas){
+      Respuesta r =await getRespuesta(id);
+      if(r.correcta) count++;
+    }
+    print("asyncOne end");
+    print("Correctas: $count");
+    setState(() {
+      _correctas = count; 
+      if(_correctas >= 2){
+        _textoPremio = "GANASTE UNA MANILLA";
+      }
+
+      if(_correctas >= 6){
+        _textoPremio = "GANASTE UNA MOCHILA";
+      }
+    });
+  }
+
+  Future<Respuesta> getRespuesta(id) async {
+    Respuesta r = await DBProvider.db.getRespuesta(id);
+    return r;
   }
 }

@@ -6,22 +6,24 @@ import 'package:wanapo_game/pantalla_resultados.dart';
 import 'package:wanapo_game/sounds/player.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
+import 'database/Database.dart';
+import 'models/RespuestaModel.dart';
 
 class PantallaPremio extends StatefulWidget {
-  final partida, logRespuestas, preguntas, index;
-  PantallaPremio({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
+  final partida, logRespuestas, preguntas, index, textoPremio;
+  PantallaPremio({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index, @required this.textoPremio}) : super(key: key);
   @override
   _PantallaPremioState createState() => new _PantallaPremioState();
 }
 
 class _PantallaPremioState extends State<PantallaPremio> {
-  var partida, logRespuestas, preguntas, index;
+  var partida, logRespuestas, preguntas, index, textoPremio;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Player.stop();
-    Player.playCorrect();
+    Player.playCorrect();   
   }
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
     logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
+    textoPremio = widget.textoPremio;
     MediaQueryData queryData = MediaQuery.of(context);
     return new WillPopScope(
       key: null,
@@ -67,7 +70,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("CORRECTO!")
+                      new LabelPremio(textoPremio)
                     ],
                   )
                 ),
@@ -148,4 +151,6 @@ class _PantallaPremioState extends State<PantallaPremio> {
     //   },
     // );
   }
+
+  
 }

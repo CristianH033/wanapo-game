@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:wanapo_game/pantalla_correcto.dart';
 import 'package:wanapo_game/pantalla_timeout.dart';
 import 'package:wanapo_game/pantalla_wrong.dart';
 import 'package:wanapo_game/sounds/player.dart';
@@ -248,7 +249,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: new PantallaPremio(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+                      child: new PantallaCorrecto(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
                     ),
                   );
                 }else{

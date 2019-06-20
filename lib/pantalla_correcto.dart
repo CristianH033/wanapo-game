@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:wanapo_game/components/label_wrong.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
 import 'package:wanapo_game/pantalla_premio.dart';
 import 'package:wanapo_game/pantalla_resultados.dart';
 import 'package:wanapo_game/sounds/player.dart';
+import 'components/label_premio.dart';
 import 'components/line_painter.dart';
 import 'database/Database.dart';
 import 'models/RespuestaModel.dart';
 
-class PantallaTimeOut extends StatefulWidget {
+class PantallaCorrecto extends StatefulWidget {
   final partida, logRespuestas, preguntas, index;
-  PantallaTimeOut({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);  
+  PantallaCorrecto({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
   @override
-  _PantallaTimeOutState createState() => new _PantallaTimeOutState();
+  _PantallaCorrectoState createState() => new _PantallaCorrectoState();
 }
 
-class _PantallaTimeOutState extends State<PantallaTimeOut> {
+class _PantallaCorrectoState extends State<PantallaCorrecto> {
   var partida, logRespuestas, preguntas, index;
   int _correctas = 0;
   String _textoPremio = "";  
@@ -27,7 +27,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
     // TODO: implement initState
     super.initState();
     Player.stop();
-    Player.playWrong();
+    Player.playCorrect();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => startUp(context));
   }
@@ -39,12 +39,12 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
     return new WillPopScope(
-        key: null,
-        onWillPop: () {
-          return Future.value(_allow()); // if true allow back else block it
-        },
-        child: new Scaffold(
-            body: new Container(
+      key: null,
+      onWillPop: () {
+        return Future.value(_allow()); // if true allow back else block it
+      },
+      child: new Scaffold(
+        body: new Container(
             decoration: BoxDecoration(
             color: Colors.black,
             image: DecorationImage(
@@ -61,25 +61,24 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
                 new Container(
                   height: queryData.size.height / 5,
                   child: new Center(
-                      child: new Image(
-                    image: AssetImage("assets/images/Logo.png"),
-                    width: 200,
-                  )),
+                    child: new Image(
+                      image: AssetImage("assets/images/Logo.png"),
+                      width: 200,
+                    )
+                  ),
                 ),
                 Spacer(flex: 1),
                 CustomPaint(
-                    painter: LinePainter(),
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[new LabelWorong("SE AGOTÓ EL TIEMPO")],
-                    )),
-                // new Image.asset(
-                //   "assets/bg/electric3.gif",
-                //   // height: 125.0,
-                //   // width: 125.0,
-                // ),
+                  painter: LinePainter(),
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new LabelPremio("CORRECTO!")
+                    ],
+                  )
+                ),
                 Spacer(flex: 1),
                 new RaisedButton(
                   key: null,
@@ -87,14 +86,19 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
                   textColor: Colors.white,
                   onPressed: buttonPressed,
                   shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  child: Text(
-                    'Continuar',
-                    style: new TextStyle(fontSize: 18),
+                    borderRadius: new BorderRadius.circular(30.0)
+                  ),
+                  child: Text('Continuar',
+                    style: new TextStyle(
+                      fontSize: 18
+                    ),
                   ),
                 )
-              ]),
-        )));
+              ]
+            ),
+      )
+      )
+    );
   }
 
   bool _allow() {
