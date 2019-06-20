@@ -78,7 +78,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                       if (partidas.hasData) {
                         return new Container(
                           child: ListView.separated(
-                            physics: BouncingScrollPhysics(),
+                            // physics: BouncingScrollPhysics(),
                             itemCount: partidas.data.length,
                             separatorBuilder: (BuildContext context, int index) => Divider(),
                             itemBuilder: (BuildContext context, int index) {

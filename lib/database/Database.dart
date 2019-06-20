@@ -307,6 +307,7 @@ class DBProvider {
   }
 
   Future<List<Partida>> getAllPartidas() async {
+    print("Por aqui me llaman");
     final db = await database;
     var res = await db.query("partidas");
     List<Partida> list = res.isNotEmpty ? res.map((c) => Partida.fromMap(c)).toList() : [];
