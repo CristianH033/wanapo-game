@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wanapo_game/pantalla_resultados.dart';
 import 'package:wanapo_game/sounds/player.dart';
+import 'components/LogoSVG.dart';
 import 'registro.dart';
 
 class PageBienvenida extends StatelessWidget {
@@ -94,20 +95,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 fit: BoxFit.none,
                 alignment: new Alignment(1.0, 1.0),
               )),
-              child: new Container(
-                decoration: BoxDecoration(
-                  // color: Colors.blue,
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/LogoSmall.png"),
-                    fit: BoxFit.none,
-                    alignment: new Alignment(1.0, -1.0),
-              )),
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Spacer(flex: 10),
+                    new LogoSVG(),
+                    Spacer(flex: 1),
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
@@ -164,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     ),
 
                   ]),
-            ))));
+            )));
   }
 
   void buttonPressed2(){

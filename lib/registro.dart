@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
 import 'package:wanapo_game/sounds/player.dart';
 
+import 'components/LogoSVG.dart';
 import 'database/Database.dart';
 import 'models/JugadorModel.dart';
 import 'models/PartidaModel.dart';
@@ -42,7 +43,7 @@ class _PageRegistroState extends State<PageRegistro> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: Image.asset('assets/images/Logo.png'),
+        child: new LogoSVG()//Image.asset('assets/images/Logo.png'),
       ),
     );
 

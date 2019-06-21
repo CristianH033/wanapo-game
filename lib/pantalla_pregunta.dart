@@ -7,6 +7,7 @@ import 'package:wanapo_game/pantalla_correcto.dart';
 import 'package:wanapo_game/pantalla_timeout.dart';
 import 'package:wanapo_game/pantalla_wrong.dart';
 import 'package:wanapo_game/sounds/player.dart';
+import 'components/LogoSVG.dart';
 import 'components/boton_respuesta.dart';
 import 'components/label_pregunta.dart';
 import 'components/line_painter.dart';
@@ -15,6 +16,8 @@ import 'models/PreguntaModel.dart';
 import 'models/RespuestaModel.dart';
 import 'pantalla_premio.dart';
 import 'package:countdown/countdown.dart';
+import 'package:flutter/material.dart';
+
 
 class PantallaPregunta extends StatefulWidget {
   final partida, logRespuestas, preguntas, index;
@@ -85,10 +88,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 new Container(
 //                  height: queryData.size.height / 5,
                   child: new Center(
-                    child: new Image(
-                      image: AssetImage("assets/images/Logo.png"),
-                      width: queryData.size.width/1.6,
-                    )
+                    child: new LogoSVG()
+                    // child: new Image(
+                    //   image: AssetImage("assets/images/Logo.png"),
+                    //   width: queryData.size.width/1.6,
+                    // )
                   ),
                 ),
                 Spacer(flex: 1),
