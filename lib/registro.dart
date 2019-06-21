@@ -43,7 +43,7 @@ class _PageRegistroState extends State<PageRegistro> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: new LogoSVG()//Image.asset('assets/images/Logo.png'),
+        child: new LogoSVG(width: queryData.size.width/1.6,)//Image.asset('assets/images/Logo.png'),
       ),
     );
 

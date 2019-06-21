@@ -6,6 +6,7 @@ import 'package:wanapo_game/pantalla_pregunta.dart';
 import 'package:wanapo_game/pantalla_premio.dart';
 import 'package:wanapo_game/pantalla_resultados.dart';
 import 'package:wanapo_game/sounds/player.dart';
+import 'components/LogoSVG.dart';
 import 'components/line_painter.dart';
 import 'database/Database.dart';
 import 'models/RespuestaModel.dart';
@@ -44,14 +45,14 @@ class _PantallaWrongState extends State<PantallaWrong> {
       },
       child: new Scaffold(
         body: new Container(
-            decoration: BoxDecoration(
-            color: Colors.black,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              // alignment: new Alignment(1.0, 1.0),
-              repeat: ImageRepeat.repeat,
-              image: AssetImage("assets/gif/electric4.gif")),
-            ),
+            // decoration: BoxDecoration(
+            // color: Colors.black,
+            // image: DecorationImage(
+            //   fit: BoxFit.cover,
+            //   // alignment: new Alignment(1.0, 1.0),
+            //   repeat: ImageRepeat.repeat,
+            //   image: AssetImage("assets/gif/electric4.gif")),
+            // ),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.max,
@@ -60,9 +61,8 @@ class _PantallaWrongState extends State<PantallaWrong> {
                 new Container(
                   height: queryData.size.height / 5,
                   child: new Center(
-                    child: new Image(
-                      image: AssetImage("assets/images/Logo.png"),
-                      width: 200,
+                    child: new LogoSVG(
+                      width: (queryData.size.width / 2) + 200,
                     )
                   ),
                 ),

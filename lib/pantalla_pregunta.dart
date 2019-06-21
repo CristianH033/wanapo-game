@@ -27,7 +27,7 @@ class PantallaPregunta extends StatefulWidget {
 }
 
 class _PantallaPreguntaState extends State<PantallaPregunta> {
-  var partida, logRespuestas, preguntas, index, tiempo = 32, tiempoRestante = 32, w;
+  var partida, logRespuestas, preguntas, index, tiempo = 3600, tiempoRestante = 3600, w;
   // CountDown cd = CountDown(Duration(seconds : 30));
   var sub;
   @override
@@ -68,7 +68,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
     preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
-    w = (queryData.size.width * ((tiempoRestante*100)/32))/100;
+    w = (queryData.size.width * ((tiempoRestante*100)/3600))/100;
     return new WillPopScope(
       key: null,
       onWillPop: () {
@@ -88,9 +88,9 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 new Container(
 //                  height: queryData.size.height / 5,
                   child: new Center(
-                    child: new LogoSVG()
+                    child: new LogoSVG(width: queryData.size.width/1.6,)
                     // child: new Image(
-                    //   image: AssetImage("assets/images/Logo.png"),
+                    //   image:  new LogoSVG(),
                     //   width: queryData.size.width/1.6,
                     // )
                   ),

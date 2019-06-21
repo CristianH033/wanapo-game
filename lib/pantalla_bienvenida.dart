@@ -100,8 +100,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new LogoSVG(),
                     Spacer(flex: 1),
+                    new LogoSVG(width: queryData.size.width /1.2),
+                    Spacer(flex: 10),
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
