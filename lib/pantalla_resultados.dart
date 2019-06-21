@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:wanapo_game/pantalla_bienvenida.dart';
 import 'package:wanapo_game/pantalla_detalles_partida.dart';
 import 'package:wanapo_game/sounds/player.dart';
+import 'components/LogoSVG.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
 import 'components/list_tile.dart';
@@ -47,11 +48,10 @@ class _PantallaResultadosState extends State<PantallaResultados> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new Container(
-                  height: queryData.size.height / 7,
+                  // height: queryData.size.height / 7,
                   child: new Center(
-                    child: new Image(
-                      image: AssetImage("assets/images/Logo.png"),
-                      width: 200,
+                    child: new LogoSVG(
+                      width: (queryData.size.width / 2) + 200,
                     )
                   ),
                 ),
