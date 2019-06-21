@@ -79,8 +79,12 @@ flutter:
 
   assets:
   - assets/images/EsquinaSup.png
+  - assets/images/EsquinaSup.svg
   - assets/images/EsquinaInf.png
+  - assets/images/EsquinaInf.svg
   - assets/images/Logo.png
+  - assets/images/Logo.svg
+  - assets/images/Splash.svg
   - assets/images/LogoSmall.png
   - assets/gif/electric3.gif
   - assets/gif/electric4.gif
