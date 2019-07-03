@@ -31,7 +31,7 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "wanapo.db");
     bool existe = await io.File(path).exists();
-    print(existe);
+    // print(existe);
     if( existe ){
       await io.File(path).delete();
     }
@@ -40,6 +40,7 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "wanapo.db");
+    // print(path);
     return await openDatabase(
       path, 
       version: 1, 
@@ -284,7 +285,7 @@ class DBProvider {
     //get the biggest id in the table
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM partidas");
     int id = table.first["id"] == null ? 1 : table.first["id"];
-    print("Id de partida en DB: $id");
+    // print("Id de partida en DB: $id");
     //insert to the table using the new id
     var raw = await db.rawInsert(
         "INSERT Into partidas (id, jugador_id, fecha_creacion)"
@@ -307,7 +308,7 @@ class DBProvider {
   }
 
   Future<List<Partida>> getAllPartidas() async {
-    print("Por aqui me llaman");
+    // print("Por aqui me llaman");
     final db = await database;
     var res = await db.query("partidas");
     List<Partida> list = res.isNotEmpty ? res.map((c) => Partida.fromMap(c)).toList() : [];
@@ -335,12 +336,12 @@ class DBProvider {
   }
 
   Future<List<RespuestasPartida>> getRespuestasPartida(int id) async {
-    print(id);
+    // print(id);
     final db = await database;
     var res = await db.query("respuestas_partida", where: "partida_id = ?", whereArgs: [id]);
-    print(res);
+    // print(res);
     List<RespuestasPartida> list = res.isNotEmpty ? res.map((c) => RespuestasPartida.fromMap(c)).toList() : [];
-    print(list);
+    // print(list);
     // print(list[0].respuestaId);
     // print(list[0].fecha);
     return list;
@@ -349,9 +350,9 @@ class DBProvider {
   Future<List<RespuestasPartida>> getAllRespuestasPartidas() async {
     final db = await database;
     var res = await db.query("respuestas_partida");
-    print(res);
+    // print(res);
     List<RespuestasPartida> list = res.isNotEmpty ? res.map((c) => RespuestasPartida.fromMap(c)).toList() : [];
-    print(list);
+    // print(list);
     return list;
   }
 
@@ -411,7 +412,7 @@ class DBProvider {
   // Future<List<EstadosPerfil>> getBlockedEstadosPerfils() async {
   //   final db = await database;
 
-  //   print("works");
+  // print("works");
   //   // var res = await db.rawQuery("SELECT * FROM EstadosPerfil WHERE estado=1");
   //   var res = await db.query("EstadosPerfil", where: "activo = ? ", whereArgs: [1]);
 
@@ -448,7 +449,7 @@ class DBProvider {
     var now = new DateTime.now();
     var formatter = new DateFormat("yyyy/MM/dd 'a las' HH:mm:ss");
     String formatted = formatter.format(now);
-    print(formatted);
+    // print(formatted);
     return formatted;
   }
 }

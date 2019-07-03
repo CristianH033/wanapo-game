@@ -173,7 +173,7 @@ class _PageRegistroState extends State<PageRegistro> {
     int id = int.tryParse(identificacionController.text);
     if(id != null){
       Jugador j = await DBProvider.db.getJugador(id);
-      print(j);
+      // print(j);
       if(j != null){
         setState(() {
           nombresController.text = j.nombres;
@@ -194,7 +194,7 @@ class _PageRegistroState extends State<PageRegistro> {
       return await DBProvider.db.newJugador(nuevoJugador);
     } catch (e) {
       // mostrarDialogo("Error", "El jugador ya ha sido registrado");
-      print(e); 
+      // print(e); 
       var jugador = await DBProvider.db.getJugador(nuevoJugador.id);
       return jugador.id;
     }
@@ -215,7 +215,7 @@ class _PageRegistroState extends State<PageRegistro> {
 
     var idPartida = await DBProvider.db.newPartida(nuevaPartida);
 
-    print("ID de partida en registr: $idPartida");
+    // print("ID de partida en registr: $idPartida");
     
     List<Pregunta> preguntas = await DBProvider.db.getAllPreguntas();
 
@@ -246,8 +246,8 @@ class _PageRegistroState extends State<PageRegistro> {
 
   Future getPlayers() async {
     List<Jugador> jugadores = await DBProvider.db.getAllJugadores();
-    jugadores.forEach((n) => print(n.id));
-    print('=========');
+    // jugadores.forEach((n) => print(n.id));
+    // print('=========');
   }
 
   void mostrarDialogo(String titulo, String texto){

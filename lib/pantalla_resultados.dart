@@ -8,6 +8,7 @@ import 'components/LogoSVG.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
 import 'components/list_tile.dart';
+import 'components/pdf.dart';
 import 'database/Database.dart';
 import 'models/PartidaModel.dart';
 import 'models/RespuestasPartidaModel.dart';
@@ -95,20 +96,41 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                     })  
                 ),                
                 // Spacer(flex: 1),
-                new RaisedButton(
-                  key: null,
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  onPressed: buttonPressed,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)
-                  ),
-                  child: Text('Inicio',
-                    style: new TextStyle(
-                      fontSize: 18
+                new Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    new RaisedButton(
+                      key: null,
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      onPressed: exportarReg,
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)
+                      ),
+                      child: Text('Exportar registros',
+                        style: new TextStyle(
+                          fontSize: 18
+                        ),
+                      ),
                     ),
-                  ),
-                )
+                    new RaisedButton(
+                      key: null,
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      onPressed: buttonPressed,
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)
+                      ),
+                      child: Text('Inicio',
+                        style: new TextStyle(
+                          fontSize: 18
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ]
             ),
       )
@@ -128,23 +150,27 @@ class _PantallaResultadosState extends State<PantallaResultados> {
   }
 
   void guardarPartida(BuildContext context) async {
-    print(logRespuestas);
-    print("Partida actual: $partidaActual");
-    print("Guardando...");
+    // print(logRespuestas);
+    // print("Partida actual: $partidaActual");
+    // print("Guardando...");
     logRespuestas.forEach((respuesta){
       RespuestasPartida respuestaPartida = new RespuestasPartida(
         respuestaId: respuesta,
         partidaId: partidaActual
       );
-      print(respuestaPartida);
-      print(respuestaPartida.respuestaId);
+      // print(respuestaPartida);
+      // print(respuestaPartida.respuestaId);
       guardarRespuesta(respuestaPartida);
     });
-    print("Guardado");
+    // print("Guardado");
   }
 
   Future guardarRespuesta(RespuestasPartida r) async {
     await DBProvider.db.newRespuestasPartida(r);
+  }
+
+  void exportarReg(){
+    reportePDF();
   }
 
   void buttonPressed() {

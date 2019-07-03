@@ -33,7 +33,7 @@ class ListTilePartida extends StatelessWidget {
                   child: Icon(Icons.timeline, color: Colors.black),
                 ),
                 title: Text(
-                  "Partida ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos}",
+                  "Partida ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos} - ${snapshot.data.id}",
                   style: TextStyle(
                       color: partidaActual == partida.id ? Colors.green : Colors.black, fontWeight: FontWeight.bold),
                 ),

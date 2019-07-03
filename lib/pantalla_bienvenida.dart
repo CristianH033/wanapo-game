@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)
                           ),
-                          child: Text('Registros',
+                          child: Text('Registro',
                             style: new TextStyle(
                                 fontSize: 18
                             ),
