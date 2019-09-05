@@ -45,7 +45,7 @@ Future reportePDF() async {
         return Container(
             alignment: Alignment.centerRight,
             margin: const EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
-            child: Text('Page ${context.pageNumber} de ${context.pagesCount}',
+            child: Text('Page ${context.pageNumber} of ${context.pagesCount}',
                 style: Theme.of(context)
                     .defaultTextStyle
                     .copyWith(color: PdfColors.grey)));
@@ -53,7 +53,7 @@ Future reportePDF() async {
       build: (Context context) => widgets));
   
   var xx = await getPath();
-  // print(xx);
+  print(xx);
 
   final File file = File(xx);
   file.writeAsBytesSync(pdf.save());
@@ -96,6 +96,8 @@ Future<List<Widget>> ListMyWidgets() async {
 }
 
 Future<String> getPath() async {
-  Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  return path.join(documentsDirectory.path, "example.pdf");
+  // Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  // return path.join(documentsDirectory.path, "results.pdf");
+  final output = await getTemporaryDirectory();
+  return "${output.path}/results.pdf";
 }
