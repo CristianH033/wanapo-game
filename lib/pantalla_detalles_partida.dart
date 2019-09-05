@@ -35,9 +35,9 @@ class _PantallaPartidaDetallesState extends State<PantallaPartidaDetalles> {
           future: DBProvider.db.getJugador(partida.jugadorId),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              return Text("Partida ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos}");
+              return Text("Item ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos}");
             }else{
-              return Text("Cargando...");
+              return Text("Loading...");
             }
           }
         ),
@@ -69,11 +69,11 @@ class _PantallaPartidaDetallesState extends State<PantallaPartidaDetalles> {
                               }
                             }
                           ),
-                          subtitle: Text("Respuesta: ${rp.data.texto}"),
+                          subtitle: Text("Answer: ${rp.data.texto}"),
                           trailing: rp.data.correcta ? Icon(Icons.check, color: Colors.green, size: 40,) : Icon(Icons.close, color: Colors.red, size: 40)
                         );
                       }else{
-                        return Text("Cargando...");
+                        return Text("Loading...");
                       }
                     });
                 }

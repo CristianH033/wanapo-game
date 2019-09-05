@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       children: <Widget>[
                         new Container(
                           width: queryData.size.width - 100,
-                          child: new Text("PON A PRUEBA TU CONOCIMIENTO Y SELECCIONA LAS RESPUESTAS CORRECTAS",
+                          child: new Text("TEST YOUR KNOWLEDGE AND SELECT THE RIGHT ANSWERS",
                              textAlign: TextAlign.center,
                              style: new TextStyle(
                                color: Colors.blue,
@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)
                           ),
-                          child: Text('Registro',
+                          child: Text('Records',
                             style: new TextStyle(
                                 fontSize: 18
                             ),
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)
                           ),
-                          child: Text('Siguiente',
+                          child: Text('Next',
                             style: new TextStyle(
                                 fontSize: 18
                             ),

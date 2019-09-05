@@ -76,7 +76,7 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("CORRECTO!")
+                      new LabelPremio("THE ANSWER IS CORRECT!")
                     ],
                   )
                 ),
@@ -89,7 +89,7 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)
                   ),
-                  child: Text('Continuar',
+                  child: Text('Continue',
                     style: new TextStyle(
                       fontSize: 18
                     ),
@@ -158,11 +158,11 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
     setState(() {
       _correctas = count; 
       if(_correctas >= 2){
-        _textoPremio = "GANASTE UNA MANILLA";
+        _textoPremio = "YOU WON A BRACELET";
       }
 
       if(_correctas >= 6){
-        _textoPremio = "GANASTE UNA MOCHILA";
+        _textoPremio = "YOU WON A BACKPACK";
       }
     });
   }

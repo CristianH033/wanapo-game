@@ -42,11 +42,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
           this.setState(() {
             tiempoRestante = d.inSeconds.toInt();
           });
-          // print(d.inSeconds);
+          print(d.inSeconds);
       });
 
       sub.onDone(() {
-        print("done");
+        // print("done");
         sub.cancel();
         Player.stop();
         Navigator.pushReplacement(
@@ -232,7 +232,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
         // return object of type Dialog
         Player.playFinal();
         return new CupertinoAlertDialog(
-          title: new Text("Última Palabra?"),
+          title: new Text("Final Word?"),
           content: new Text(""),
           actions: <Widget>[
             CupertinoDialogAction(
@@ -242,10 +242,10 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 Player.stop();
                 Navigator.of(context).pop();
                 logRespuestas.add(respuesta.id);
-                print(logRespuestas);
-                print("index: $index");
+                // print(logRespuestas);
+                // print("index: $index");
                 if(respuesta.correcta){
-                  print("Id de partida en pregunta: $partida");
+                  // print("Id de partida en pregunta: $partida");
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -269,7 +269,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                   );
                 }
               },
-              child: Text("Si"),
+              child: Text("Yes"),
             ),
             CupertinoDialogAction(
               onPressed: () {

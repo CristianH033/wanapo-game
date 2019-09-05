@@ -33,7 +33,7 @@ class ListTilePartida extends StatelessWidget {
                   child: Icon(Icons.timeline, color: Colors.black),
                 ),
                 title: Text(
-                  "Partida ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos} - ${snapshot.data.id}",
+                  "Item ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos} - ${snapshot.data.id}",
                   style: TextStyle(
                       color: partidaActual == partida.id ? Colors.green : Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -47,7 +47,7 @@ class ListTilePartida extends StatelessWidget {
                 trailing: Icon(Icons.keyboard_arrow_right,
                     color: Colors.black38, size: 30.0));
           } else {
-            return Text("Cargando...");
+            return Text("Loading...");
           }
         });
   }

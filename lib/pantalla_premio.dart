@@ -83,7 +83,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)
                   ),
-                  child: Text('Continuar',
+                  child: Text('Continue',
                     style: new TextStyle(
                       fontSize: 18
                     ),

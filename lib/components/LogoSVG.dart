@@ -17,7 +17,7 @@ class LogoSVG extends StatelessWidget {
     final Widget svgLogo = new SvgPicture.asset(
       assetName,
       width: width != null ? width : queryData.size.width,
-      semanticsLabel: 'Empresa Logo'
+      semanticsLabel: 'Logo'
     );
     return svgLogo;
   }

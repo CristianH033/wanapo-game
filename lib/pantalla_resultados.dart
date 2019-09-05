@@ -66,7 +66,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(12),
-                        child: new LabelPremio("Resultados:")
+                        child: new LabelPremio("Results:")
                       ,)
                     ],
                   )
@@ -109,7 +109,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)
                       ),
-                      child: Text('Exportar registros',
+                      child: Text('Export records',
                         style: new TextStyle(
                           fontSize: 18
                         ),
@@ -123,7 +123,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)
                       ),
-                      child: Text('Inicio',
+                      child: Text('Home',
                         style: new TextStyle(
                           fontSize: 18
                         ),
@@ -151,7 +151,7 @@ class _PantallaResultadosState extends State<PantallaResultados> {
 
   void guardarPartida(BuildContext context) async {
     // print(logRespuestas);
-    // print("Partida actual: $partidaActual");
+    // print("Item actual: $partidaActual");
     // print("Guardando...");
     logRespuestas.forEach((respuesta){
       RespuestasPartida respuestaPartida = new RespuestasPartida(

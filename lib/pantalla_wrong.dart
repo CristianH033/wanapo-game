@@ -74,7 +74,7 @@ class _PantallaWrongState extends State<PantallaWrong> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelWorong("RESPUESTA EQUIVOCADA")
+                      new LabelWorong("WRONG ANSWER")
                     ],
                   )
                 ),
@@ -87,7 +87,7 @@ class _PantallaWrongState extends State<PantallaWrong> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0)
                   ),
-                  child: Text('Continuar',
+                  child: Text('Continue',
                     style: new TextStyle(
                       fontSize: 18
                     ),
@@ -156,11 +156,11 @@ class _PantallaWrongState extends State<PantallaWrong> {
     setState(() {
       _correctas = count; 
       if(_correctas >= 2){
-        _textoPremio = "GANASTE UNA MANILLA";
+        _textoPremio = "YOU WON A BRACELET";
       }
 
       if(_correctas >= 6){
-        _textoPremio = "GANASTE UNA MOCHILA";
+        _textoPremio = "YOU WON A BACKPACK";
       }
     });
   }

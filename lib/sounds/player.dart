@@ -19,48 +19,48 @@ class Player {
   Player._internal();
 
   static Future playIntro() async {
-    // playingLoop = true;
-    // playerLoop = await cache.loop('main_theme.mp3', isNotification: false);
+    playingLoop = true;
+    playerLoop = await cache.loop('main_theme.mp3', isNotification: false);
   }
 
   static Future playMain() async {
-    // playingLoop = true;
-    // playerLoop = await cache.loop('main.mp3', isNotification: false);
+    playingLoop = true;
+    playerLoop = await cache.loop('main.mp3', isNotification: false);
   }
 
   static Future playCorrect() async {
-    // player = await cache.play('correct.mp3', isNotification: false);
+    player = await cache.play('correct.mp3', isNotification: false);
   }
 
   static Future playLetsPlay() async {
-    // player = await cache.play('lets_play.mp3', isNotification: false);
+    player = await cache.play('lets_play.mp3', isNotification: false);
   }
 
   static Future playBreak() async {
-    // player = await cache.play('break.mp3', isNotification: false);
+    player = await cache.play('break.mp3', isNotification: false);
   }
 
   static Future playWrong() async {
-    // player = await cache.play('wrong.mp3', isNotification: false);
+    player = await cache.play('wrong.mp3', isNotification: false);
   }
 
   static Future playFinal() async {
-    // player = await cache.play('final_answer.mp3', isNotification: false);
+    player = await cache.play('final_answer.mp3', isNotification: false);
   }
 
   static void pauseLoop(){
-    // playerLoop.pause();
+    playerLoop.pause();
   }
 
   static void resumeLoop(){
     if(playingLoop){
-      // playerLoop.resume();
+      playerLoop.resume();
     }
   }
 
   static stop() {
-    // playingLoop = false;
-    // player.stop();
-    // playerLoop.stop();
+    playingLoop = false;
+    player.stop();
+    playerLoop.stop();
   } 
 }

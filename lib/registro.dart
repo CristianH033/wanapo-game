@@ -56,9 +56,9 @@ class _PageRegistroState extends State<PageRegistro> {
       },
       onEditingComplete: searchJugador,
       decoration: InputDecoration(
-        labelText: 'Identificación',
-        hintText: 'Identificación',
-        errorText: !_identificacionValid ? "El campo es requerido" : null,
+        labelText: "ID",
+        hintText: "ID",
+        errorText: !_identificacionValid ? "The field is required" : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
@@ -68,9 +68,9 @@ class _PageRegistroState extends State<PageRegistro> {
       autofocus: false,
       controller: nombresController,
       decoration: InputDecoration(
-        labelText: 'Nombres',
-        hintText: 'Nombres',
-        errorText: !_nombresValid ? "El campo es requerido" : null,
+        labelText: 'Names',
+        hintText: 'Names',
+        errorText: !_nombresValid ? "The field is required" : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
@@ -80,9 +80,9 @@ class _PageRegistroState extends State<PageRegistro> {
       autofocus: false,
       controller: apellidosController,
       decoration: InputDecoration(
-        labelText: 'Apellidos',
-        hintText: 'Apellidos',
-        errorText: !_apellidosValid ? "El campo es requerido" : null,
+        labelText: 'Surnames',
+        hintText: 'Surnames',
+        errorText: !_apellidosValid ? "The field is required" : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
@@ -94,7 +94,7 @@ class _PageRegistroState extends State<PageRegistro> {
       decoration: InputDecoration(
         labelText: 'E-mail',
         hintText: 'E-mail',
-        errorText: !_correoValid ? "El campo es requerido" : null,
+        errorText: !_correoValid ? "The field is required" : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
@@ -107,7 +107,7 @@ class _PageRegistroState extends State<PageRegistro> {
       shape: new RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(30.0)
       ),
-      child: Text('A Jugar',
+      child: Text("Let's Play",
         style: new TextStyle(
           fontSize: 18
         ),

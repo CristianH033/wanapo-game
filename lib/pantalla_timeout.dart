@@ -74,7 +74,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[new LabelWorong("SE AGOTÓ EL TIEMPO")],
+                      children: <Widget>[new LabelWorong("TIME OUT")],
                     )),
                 // new Image.asset(
                 //   "assets/bg/electric3.gif",
@@ -90,7 +90,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
                   child: Text(
-                    'Continuar',
+                    'Continue',
                     style: new TextStyle(fontSize: 18),
                   ),
                 )
@@ -154,11 +154,11 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
     setState(() {
       _correctas = count; 
       if(_correctas >= 2){
-        _textoPremio = "GANASTE UNA MANILLA";
+        _textoPremio = "YOU WON A BRACELET";
       }
 
       if(_correctas >= 6){
-        _textoPremio = "GANASTE UNA MOCHILA";
+        _textoPremio = "YOU WON A BACKPACK";
       }
     });
   }

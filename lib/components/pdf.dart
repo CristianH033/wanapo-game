@@ -36,7 +36,7 @@ Future reportePDF() async {
             decoration: const BoxDecoration(
                 border:
                     BoxBorder(bottom: true, width: 0.5, color: PdfColors.grey)),
-            child: Text('Resultados juego',
+            child: Text('Game results',
                 style: Theme.of(context)
                     .defaultTextStyle
                     .copyWith(color: PdfColors.grey)));
@@ -45,7 +45,7 @@ Future reportePDF() async {
         return Container(
             alignment: Alignment.centerRight,
             margin: const EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
-            child: Text('Página ${context.pageNumber} de ${context.pagesCount}',
+            child: Text('Page ${context.pageNumber} de ${context.pagesCount}',
                 style: Theme.of(context)
                     .defaultTextStyle
                     .copyWith(color: PdfColors.grey)));
@@ -58,7 +58,7 @@ Future reportePDF() async {
   final File file = File(xx);
   file.writeAsBytesSync(pdf.save());
   final ByteData bytes = await rootBundle.load(xx);
-  await Share.file('reporte', 'resultados.pdf', bytes.buffer.asUint8List(), 'application/pdf');
+  await Share.file('report', 'results.pdf', bytes.buffer.asUint8List(), 'application/pdf');
   // Share.file(path: xx, mimeType: ShareType.fromMimeType('application/pdf'), title: 'Resultados', text: 'Hola!!');
 }
 
@@ -75,7 +75,7 @@ Future<List<Widget>> ListMyWidgets() async {
     print(partida.id);
     // print(j.id);
     // String nombres = ('${j.nombres} ${j.apellidos}').replaceAll(new RegExp(r'ñ'), 'n');
-    list.add( new Header(level: 1, textStyle: TextStyle(font: ttf), text: '${j.nombres} ${j.apellidos}\n\nc.c ${j.id}\n\n${j.correo}\n\nPartida ${partida.id} (${partida.fechaCreacion})') );
+    list.add( new Header(level: 1, textStyle: TextStyle(font: ttf), text: '${j.nombres} ${j.apellidos}\n\nID ${j.id}\n\n${j.correo}\n\nItem ${partida.id} (${partida.fechaCreacion})') );
     // list.add( new Header(level: 1, text: 'CC: ${j.id} - ${j.nombres} ${j.apellidos} - ${j.correo}') );
     // list.add( new Header(level: 1, text: 'Partida ${partida.id} - ${j.nombres} ${j.apellidos} - ${j.id}') );
     for (RespuestasPartida rp in rps){
@@ -87,8 +87,8 @@ Future<List<Widget>> ListMyWidgets() async {
       // pt = pt.replaceAll(new RegExp(r'”'), '"');
       // pt = pt.replaceAll(new RegExp(r'ñ'), 'n');
       // pt = String.fromCharCodes(utf8.encode(pt));
-      list.add(Header(level: 2, text: 'Pregunta: ${pregunta.texto}', textStyle: TextStyle(font: ttf)));
-      list.add(Bullet(text: 'Respuesta: ${respuesta.texto} ${respuesta.correcta ? "(Correcta)" : "(Incorrecta)"}.', style:  TextStyle(font: ttf) ) );
+      list.add(Header(level: 2, text: 'Question: ${pregunta.texto}', textStyle: TextStyle(font: ttf)));
+      list.add(Bullet(text: 'Answer: ${respuesta.texto} ${respuesta.correcta ? "(Correcta)" : "(Incorrecta)"}.', style:  TextStyle(font: ttf) ) );
     }
     list.add(Padding(padding: const EdgeInsets.all(10)));
   }
