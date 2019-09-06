@@ -1,5 +1,4 @@
-
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
@@ -16,12 +15,10 @@ import 'package:wanapo_game/models/PartidaModel.dart';
 import 'package:wanapo_game/models/PreguntaModel.dart';
 import 'package:wanapo_game/models/RespuestaModel.dart';
 import 'package:wanapo_game/models/RespuestasPartidaModel.dart';
-
-
+import 'dart:io' as io;
 
 Future reportePDF() async {
-  
-  final Document pdf = Document(deflate: zlib.encode);
+  final Document pdf = new Document(deflate: zlib.encode);
   final List<Widget> widgets = await ListMyWidgets();
 
   pdf.addPage(MultiPage(
@@ -51,34 +48,53 @@ Future reportePDF() async {
                     .copyWith(color: PdfColors.grey)));
       },
       build: (Context context) => widgets));
-  
-  var xx = await getPath();
-  print(xx);
 
-  final File file = File(xx);
-  file.writeAsBytesSync(pdf.save());
-  final ByteData bytes = await rootBundle.load(xx);
-  await Share.file('report', 'results.pdf', bytes.buffer.asUint8List(), 'application/pdf');
-  // Share.file(path: xx, mimeType: ShareType.fromMimeType('application/pdf'), title: 'Resultados', text: 'Hola!!');
+  // var xx = await getPath();
+  // print(xx);
+
+  try {
+    if (await io.File(await getPath()).exists()) {
+      Directory dir = Directory(await getPath());
+      await dir.delete(recursive: true);
+    }
+
+    File file = File(await getPath());
+    await file.writeAsBytes(pdf.save());
+    // ByteData bytes = await rootBundle.load(file.path);
+    // ByteData bytes = ByteData(file.readAsBytesSync());
+    await Share.file(
+        'report', 'results.pdf', file.readAsBytesSync(), 'application/pdf');
+
+    // await Share.file(path: xx, mimeType: ShareType.fromMimeType('application/pdf'), title: 'Resultados', text: 'Hola!!');
+  } catch (e) {
+    print(e);
+  }
 }
 
 Future<List<Widget>> ListMyWidgets() async {
-  final ByteData fontByteData = await rootBundle.load("assets/font/OpenSans.ttf");
-  final Uint8List fontData = fontByteData.buffer.asUint8List(fontByteData.offsetInBytes, fontByteData.lengthInBytes);
+  final ByteData fontByteData =
+      await rootBundle.load("assets/font/OpenSans.ttf");
+  final Uint8List fontData = fontByteData.buffer
+      .asUint8List(fontByteData.offsetInBytes, fontByteData.lengthInBytes);
   final Font ttf = Font.ttf(fontData.buffer.asByteData());
 
   final List<Partida> partidas = await DBProvider.db.getAllPartidas();
   List<Widget> list = new List();
-  for(Partida partida in partidas) {
+  for (Partida partida in partidas) {
     Jugador j = await DBProvider.db.getJugador(partida.jugadorId);
-    List<RespuestasPartida> rps = await DBProvider.db.getRespuestasPartida(partida.id);
+    List<RespuestasPartida> rps =
+        await DBProvider.db.getRespuestasPartida(partida.id);
     print(partida.id);
     // print(j.id);
     // String nombres = ('${j.nombres} ${j.apellidos}').replaceAll(new RegExp(r'ñ'), 'n');
-    list.add( new Header(level: 1, textStyle: TextStyle(font: ttf), text: '${j.nombres} ${j.apellidos}\n\nID ${j.id}\n\n${j.correo}\n\nItem ${partida.id} (${partida.fechaCreacion})') );
+    list.add(new Header(
+        level: 1,
+        textStyle: TextStyle(font: ttf),
+        text:
+            '${j.nombres} ${j.apellidos}\n\nID ${j.id}\n\n${j.correo}\n\nItem ${partida.id} (${partida.fechaCreacion})'));
     // list.add( new Header(level: 1, text: 'CC: ${j.id} - ${j.nombres} ${j.apellidos} - ${j.correo}') );
     // list.add( new Header(level: 1, text: 'Partida ${partida.id} - ${j.nombres} ${j.apellidos} - ${j.id}') );
-    for (RespuestasPartida rp in rps){
+    for (RespuestasPartida rp in rps) {
       Respuesta respuesta = await DBProvider.db.getRespuesta(rp.respuestaId);
       Pregunta pregunta = await DBProvider.db.getPregunta(respuesta.preguntaId);
       // print(pregunta.id);
@@ -87,8 +103,13 @@ Future<List<Widget>> ListMyWidgets() async {
       // pt = pt.replaceAll(new RegExp(r'”'), '"');
       // pt = pt.replaceAll(new RegExp(r'ñ'), 'n');
       // pt = String.fromCharCodes(utf8.encode(pt));
-      list.add(Header(level: 2, text: 'Question: ${pregunta.texto}', textStyle: TextStyle(font: ttf)));
-      list.add(Bullet(text: 'Answer: ${respuesta.texto} ${respuesta.correcta ? "(Correcta)" : "(Incorrecta)"}.', style:  TextStyle(font: ttf) ) );
+      list.add(Header(
+          level: 2,
+          text: 'Question: ${pregunta.texto}',
+          textStyle: TextStyle(font: ttf)));
+      list.add(Text(
+          ' -- Answer: ${respuesta.texto} ${respuesta.correcta ? "(Correcta)" : "(Incorrecta)"}.',
+          style: TextStyle(font: ttf)));
     }
     list.add(Padding(padding: const EdgeInsets.all(10)));
   }
@@ -96,8 +117,8 @@ Future<List<Widget>> ListMyWidgets() async {
 }
 
 Future<String> getPath() async {
-  // Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  // return path.join(documentsDirectory.path, "results.pdf");
-  final output = await getTemporaryDirectory();
-  return "${output.path}/results.pdf";
+  Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  return path.join(documentsDirectory.path, "example.pdf");
+  // Directory output = await getTemporaryDirectory();
+  // return "${output.path}/results.pdf";
 }

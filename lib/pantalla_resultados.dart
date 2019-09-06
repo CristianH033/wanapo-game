@@ -169,8 +169,8 @@ class _PantallaResultadosState extends State<PantallaResultados> {
     await DBProvider.db.newRespuestasPartida(r);
   }
 
-  void exportarReg(){
-    reportePDF();
+  void exportarReg() async{
+    await reportePDF();
   }
 
   void buttonPressed() {
