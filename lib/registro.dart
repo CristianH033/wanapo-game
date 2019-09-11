@@ -43,7 +43,7 @@ class _PageRegistroState extends State<PageRegistro> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: new LogoSVG(width: queryData.size.width/1.6,)//Image.asset('assets/images/Logo.png'),
+        child: new LogoSVG(width: queryData.size.width/1.6,height: null,)//Image.asset('assets/images/Logo.png'),
       ),
     );
 
@@ -80,8 +80,8 @@ class _PageRegistroState extends State<PageRegistro> {
       autofocus: false,
       controller: apellidosController,
       decoration: InputDecoration(
-        labelText: 'Surnames',
-        hintText: 'Surnames',
+        labelText: 'Last Name',
+        hintText: 'Last Name',
         errorText: !_apellidosValid ? "The field is required" : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
@@ -107,7 +107,7 @@ class _PageRegistroState extends State<PageRegistro> {
       shape: new RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(30.0)
       ),
-      child: Text("Let's Play",
+      child: Text("Play",
         style: new TextStyle(
           fontSize: 18
         ),

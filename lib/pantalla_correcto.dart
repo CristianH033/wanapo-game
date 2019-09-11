@@ -64,7 +64,8 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
                   height: queryData.size.height / 5,
                   child: new Center(
                     child: new LogoSVG(
-                      width: (queryData.size.width / 2) + 200,
+                      width: (queryData.size.width / 2) + 50,
+                      height: null,
                     )
                   ),
                 ),
@@ -76,7 +77,7 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("THE ANSWER IS CORRECT!")
+                      new LabelPremio("THE ANSWER IS RIGHT!")
                     ],
                   )
                 ),

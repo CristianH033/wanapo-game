@@ -63,7 +63,8 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
                   height: queryData.size.height / 5,
                   child: new Center(
                       child: new LogoSVG(
-                      width: (queryData.size.width / 2) + 200,
+                      width: (queryData.size.width / 2) + 50,
+                      height: null,
                     )
                   ),
                 ),

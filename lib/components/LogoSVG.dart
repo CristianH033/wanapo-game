@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wanapo_game/models/PartidaModel.dart';
+// import 'package:wanapo_game/models/PartidaModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 

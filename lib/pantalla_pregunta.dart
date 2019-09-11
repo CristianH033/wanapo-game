@@ -88,7 +88,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 new Container(
 //                  height: queryData.size.height / 5,
                   child: new Center(
-                    child: new LogoSVG(width: queryData.size.width/1.6,)
+                    child: new LogoSVG(width: queryData.size.width/1.6,height: null)
                     // child: new Image(
                     //   image:  new LogoSVG(),
                     //   width: queryData.size.width/1.6,

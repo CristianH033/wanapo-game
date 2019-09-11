@@ -52,7 +52,8 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                   // height: queryData.size.height / 7,
                   child: new Center(
                     child: new LogoSVG(
-                      width: (queryData.size.width / 3) + 200,
+                      width: (queryData.size.width / 3) + 50,
+                      height: null,
                     )
                   ),
                 ),
