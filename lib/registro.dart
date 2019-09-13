@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+// import 'package:uuid/uuid.dart';
 import 'package:wanapo_game/pantalla_pregunta.dart';
 import 'package:wanapo_game/sounds/player.dart';
 
@@ -21,11 +24,13 @@ class _PageRegistroState extends State<PageRegistro> {
   TextEditingController nombresController = TextEditingController();
   TextEditingController apellidosController = TextEditingController();
   TextEditingController correoController = TextEditingController();
+  TextEditingController cellularController = TextEditingController();
 
-  bool _identificacionValid = true;
+  // bool _identificacionValid = true;
   bool _nombresValid = true;
   bool _apellidosValid = true;
   bool _correoValid = true;
+  bool _cellularValid = true;
 
 
   // _PageRegistroState();
@@ -47,21 +52,21 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
 
-    final id = TextField(
-      keyboardType: TextInputType.number,
-      autofocus: true,
-      controller: identificacionController,
-      onChanged: (text) {
-        searchJugador();
-      },
-      onEditingComplete: searchJugador,
-      decoration: InputDecoration(
-        labelText: "ID",
-        hintText: "ID",
-        errorText: !_identificacionValid ? "The field is required" : null,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-      ),
-    );
+    // final id = TextField(
+    //   keyboardType: TextInputType.number,
+    //   autofocus: true,
+    //   controller: identificacionController,
+    //   onChanged: (text) {
+    //     searchJugador();
+    //   },
+    //   onEditingComplete: searchJugador,
+    //   decoration: InputDecoration(
+    //     labelText: "ID",
+    //     hintText: "ID",
+    //     errorText: !_identificacionValid ? "The field is required" : null,
+    //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+    //   ),
+    // );
     
     final nombres = TextField(
       keyboardType: TextInputType.text,
@@ -99,6 +104,18 @@ class _PageRegistroState extends State<PageRegistro> {
       ),
     );
 
+    final cellular = TextField(
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      controller: cellularController,
+      decoration: InputDecoration(
+        labelText: 'Phone number',
+        hintText: 'Phone number',
+        errorText: !_cellularValid ? "The field is required" : null,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      ),
+    );
+
     final loginButton = new RaisedButton(
       key: null,
       color: Colors.blue,
@@ -127,13 +144,15 @@ class _PageRegistroState extends State<PageRegistro> {
             children: <Widget>[
             logo,
             SizedBox(height: 48.0),
-            id,
-            SizedBox(height: 8.0),            
+            // id,
+            // SizedBox(height: 8.0),            
             nombres,            
             SizedBox(height: 8.0),
             apellidos,
             SizedBox(height: 8.0),
             email,
+            SizedBox(height: 8.0),
+            cellular,
             SizedBox(height: 30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -160,13 +179,14 @@ class _PageRegistroState extends State<PageRegistro> {
 
   bool validar(){
     setState(() {
-      _identificacionValid = identificacionController.text.isNotEmpty && _isNumeric(identificacionController.text) ;
+      // _identificacionValid = identificacionController.text.isNotEmpty && _isNumeric(identificacionController.text) ;
       _nombresValid = nombresController.text.isNotEmpty;
       _apellidosValid = apellidosController.text.isNotEmpty;
       _correoValid = correoController.text.isNotEmpty;
+      _cellularValid = cellularController.text.isNotEmpty;
     });
 
-    return (_identificacionValid && _nombresValid && _apellidosValid && _correoValid);
+    return (_cellularValid && _nombresValid && _apellidosValid && _correoValid);
   }
 
   searchJugador() async {
@@ -185,16 +205,20 @@ class _PageRegistroState extends State<PageRegistro> {
   }
 
   nuevoJugador() async {    
+    // var uuid = new Uuid();
+    var uniqid = 1000000 + (Random(1).nextInt(9999999-1000000));
+    print(uniqid);
     Jugador nuevoJugador = new Jugador(
-      id: int.parse(identificacionController.text),
+      id: uniqid,
       nombres: nombresController.text,
       apellidos: apellidosController.text,
-      correo: correoController.text);
+      correo: correoController.text,
+      celular: cellularController.text
+    );
     try {  
       return await DBProvider.db.newJugador(nuevoJugador);
     } catch (e) {
-      // mostrarDialogo("Error", "El jugador ya ha sido registrado");
-      // print(e); 
+      print(e);
       var jugador = await DBProvider.db.getJugador(nuevoJugador.id);
       return jugador.id;
     }

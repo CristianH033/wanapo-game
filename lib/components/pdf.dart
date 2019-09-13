@@ -91,7 +91,7 @@ Future<List<Widget>> ListMyWidgets() async {
         level: 1,
         textStyle: TextStyle(font: ttf),
         text:
-            '${j.nombres} ${j.apellidos}\n\nID ${j.id}\n\n${j.correo}\n\nItem ${partida.id} (${partida.fechaCreacion})'));
+            '${j.nombres} ${j.apellidos}\n\n${j.correo}\n\nItem ${partida.id} (${partida.fechaCreacion})'));
     // list.add( new Header(level: 1, text: 'CC: ${j.id} - ${j.nombres} ${j.apellidos} - ${j.correo}') );
     // list.add( new Header(level: 1, text: 'Partida ${partida.id} - ${j.nombres} ${j.apellidos} - ${j.id}') );
     for (RespuestasPartida rp in rps) {

@@ -157,11 +157,11 @@ class _PantallaWrongState extends State<PantallaWrong> {
     setState(() {
       _correctas = count; 
       if(_correctas >= 2){
-        _textoPremio = "YOU WON A BRACELET";
+        _textoPremio = "YOU WON A HANDLE";
       }
 
       if(_correctas >= 6){
-        _textoPremio = "YOU WON A BACKPACK";
+        _textoPremio = "YOU WON A \"MOCHILA\"";
       }
     });
   }

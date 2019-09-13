@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wanapo_game/database/Database.dart';
-import 'package:wanapo_game/models/JugadorModel.dart';
+// import 'package:wanapo_game/models/JugadorModel.dart';
 import 'package:wanapo_game/models/PartidaModel.dart';
-import 'package:wanapo_game/models/RespuestaModel.dart';
+// import 'package:wanapo_game/models/RespuestaModel.dart';
 
 class ListTilePartida extends StatelessWidget {
   // a property on this class
@@ -33,7 +33,7 @@ class ListTilePartida extends StatelessWidget {
                   child: Icon(Icons.timeline, color: Colors.black),
                 ),
                 title: Text(
-                  "Item ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos} - ${snapshot.data.id}",
+                  "Item ${partida.id} - ${snapshot.data.nombres} ${snapshot.data.apellidos}",
                   style: TextStyle(
                       color: partidaActual == partida.id ? Colors.green : Colors.black, fontWeight: FontWeight.bold),
                 ),

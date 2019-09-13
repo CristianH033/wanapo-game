@@ -53,6 +53,7 @@ class DBProvider {
             " 'nombres'    varchar(255) NOT NULL ,"
             " 'apellidos'  varchar(255) NOT NULL ,"
             " 'correo'  varchar(255) NOT NULL ,"
+            " 'celular'  varchar(255) NOT NULL ,"
             " 'fecha_creacion'   varchar(255) NOT NULL"
             ")"
         );
@@ -176,9 +177,9 @@ class DBProvider {
   newJugador(Jugador newJugador) async {
     final db = await database;
     var raw = await db.rawInsert(
-        "INSERT Into jugadores (id, nombres, apellidos, correo, fecha_creacion)"
-        "VALUES (?,?,?,?,?)",
-        [newJugador.id, newJugador.nombres, newJugador.apellidos, newJugador.correo, fechaNow()]);
+        "INSERT Into jugadores (id, nombres, apellidos, correo, celular, fecha_creacion)"
+        "VALUES (?,?,?,?,?,?)",
+        [newJugador.id, newJugador.nombres, newJugador.apellidos, newJugador.correo, newJugador.celular, fechaNow()]);
     return raw;
   }
   // newEstado(Estado newEstado) async {
@@ -340,7 +341,7 @@ class DBProvider {
     final db = await database;
     var raw = await db.rawInsert(
         "INSERT Into respuestas_partida (partida_id, respuesta_id, fecha)"
-        " VALUES (?,?,?)",
+        "VALUES (?,?,?)",
         [newRespuestasPartida.partidaId, newRespuestasPartida.respuestaId, fechaNow()]);
     return raw;
   }
