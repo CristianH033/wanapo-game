@@ -73,8 +73,8 @@ class _PageRegistroState extends State<PageRegistro> {
       autofocus: false,
       controller: nombresController,
       decoration: InputDecoration(
-        labelText: 'Names',
-        hintText: 'Names',
+        labelText: 'Name',
+        hintText: 'Name',
         errorText: !_nombresValid ? "The field is required" : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
