@@ -97,40 +97,43 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                     })  
                 ),                
                 // Spacer(flex: 1),
-                new Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    new RaisedButton(
-                      key: null,
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      onPressed: exportarReg,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)
-                      ),
-                      child: Text('Export records',
-                        style: new TextStyle(
-                          fontSize: 18
+                new Container(
+                  padding: EdgeInsets.all(15),
+                  child: new Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      new RaisedButton(
+                        key: null,
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        onPressed: exportarReg,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)
+                        ),
+                        child: Text('Export records',
+                          style: new TextStyle(
+                              fontSize: 18
+                          ),
                         ),
                       ),
-                    ),
-                    new RaisedButton(
-                      key: null,
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      onPressed: buttonPressed,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)
-                      ),
-                      child: Text('Home',
-                        style: new TextStyle(
-                          fontSize: 18
+                      new RaisedButton(
+                        key: null,
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        onPressed: buttonPressed,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)
                         ),
-                      ),
-                    )
-                  ],
+                        child: Text('Home',
+                          style: new TextStyle(
+                              fontSize: 18
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ]
             ),

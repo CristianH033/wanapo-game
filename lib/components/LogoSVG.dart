@@ -13,10 +13,12 @@ class LogoSVG extends StatelessWidget {
 
   Widget build(context) {
     MediaQueryData queryData = MediaQuery.of(context);
+    var w = width != null ? width : queryData.size.width;
+    double max = 300;
     final String assetName = 'assets/images/Logo.svg';
     final Widget svgLogo = new SvgPicture.asset(
       assetName,
-      width: width != null ? width : queryData.size.width,
+      width: w > max ? max : w,
       semanticsLabel: 'Logo'
     );
     return svgLogo;
